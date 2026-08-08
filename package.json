@@ -1,0 +1,57 @@
+{
+  "name": "altibix-codelab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Altibix Codelab — premium IT solutions marketing site.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 0",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
+    "test": "playwright test",
+    "test:update": "playwright test --update-snapshots",
+    "test:a11y": "playwright test accessibility"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "3.9.1",
+    "@radix-ui/react-slot": "1.1.1",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "embla-carousel-react": "8.5.2",
+    "framer-motion": "11.15.0",
+    "gsap": "3.12.5",
+    "lenis": "1.1.18",
+    "lucide-react": "0.469.0",
+    "next": "^15.5.22",
+    "react": "19.0.0",
+    "react-countup": "6.5.3",
+    "react-dom": "19.0.0",
+    "react-hook-form": "7.54.2",
+    "react-intersection-observer": "9.14.1",
+    "tailwind-merge": "2.6.0",
+    "tailwindcss-animate": "1.0.7",
+    "zod": "3.24.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "22.10.5",
+    "@types/react": "19.0.7",
+    "@types/react-dom": "19.0.3",
+    "autoprefixer": "10.4.20",
+    "eslint": "8.57.1",
+    "eslint-config-next": "^15.5.22",
+    "eslint-config-prettier": "9.1.0",
+    "postcss": "8.4.49",
+    "prettier": "3.4.2",
+    "prettier-plugin-tailwindcss": "0.6.9",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.7.3"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}

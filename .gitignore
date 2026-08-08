@@ -1,0 +1,48 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Extracted reference material.
+#
+# `assets/` is the scraped original site — its stylesheet, fonts and source
+# media — kept locally so the port can be checked against it line by line. It is
+# roughly 130 MB, none of it is imported by the app, and nothing in `src/` or
+# `public/` depends on it. Everything the site actually serves lives in
+# `public/assets/`, which is committed.
+/assets/

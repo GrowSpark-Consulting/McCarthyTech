@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Global resets and document defaults.
+   *
+   * `scroll-behavior` is intentionally left at `auto`: Lenis drives scrolling
+   * from its own animation loop, and a native smooth scroll running alongside it
+   * fights the loop and stutters. Programmatic scrolling goes through
+   * `useSmoothScroll()` instead.
+   */
+  :root {
+    scroll-behavior: auto;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    /*
+     * The floating header capsule and the mega-menu are wider than some narrow
+     * viewports mid-transition. Clipping the horizontal axis guarantees the
+     * "no horizontal scrolling" requirement holds at every breakpoint without
+     * suppressing vertical scrolling the way `overflow: hidden` would.
+     */
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-ink font-body text-base font-normal leading-7 tracking-body text-white;
+    margin: 0;
+    padding: 0;
+    overflow-x: clip;
+    /* Keeps type crisp against the dark canvas on macOS/iOS. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings inherit the display face and the design's tight display tracking. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+    margin: 0;
+  }
+
+  p,
+  li,
+  span {
+    margin-bottom: 0;
+  }
+
+  ul,
+  ol {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+  }
+
+  /*
+   * Remove the browser's default focus ring only where a `focus-visible` ring is
+   * supplied by the component. Every interactive element in the app defines one,
+   * so keyboard focus is never invisible.
+   */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Consistent, high-contrast focus ring for anything without a bespoke one. */
+  :focus-visible {
+    outline: 2px solid theme('colors.lime');
+    outline-offset: 2px;
+  }
+
+  /* Strip the WebKit search input decorations so the drawer field matches spec. */
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+
+  ::selection {
+    @apply bg-lime text-ink;
+  }
+}
+
+@layer utilities {
+  /**
+   * Global reduced-motion honour.
+   *
+   * Components already branch on `usePrefersReducedMotion()` for JS-driven
+   * motion; this is the CSS-side backstop that neutralises any transition or
+   * keyframe animation that slips through, including third-party styles.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
