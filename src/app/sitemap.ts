@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { serviceDetailPaths } from '@/lib/service-slugs';
+import { serviceSubDetails } from '@/lib/service-sub-details';
 import { jobListings } from '@/lib/careers-page';
 import { siteConfig } from '@/lib/site';
 
@@ -62,5 +63,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...routes, ...serviceDetailRoutes, ...careerDetailRoutes];
+  // App Development's four offering-card pages — leaves under a leaf, hence
+  // the lowest priority on the site.
+  const serviceSubDetailRoutes = serviceSubDetails.map((sub) => ({
+    url: `${siteConfig.url}/services/${sub.parentSlug}/${sub.slug}`,
+    lastModified,
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  return [...routes, ...serviceDetailRoutes, ...serviceSubDetailRoutes, ...careerDetailRoutes];
 }

@@ -1,4 +1,5 @@
 import { serviceDetailPaths } from '@/lib/service-slugs';
+import { serviceSubDetails } from '@/lib/service-sub-details';
 
 /**
  * Routes that actually resolve.
@@ -22,6 +23,9 @@ export const SHIPPED_ROUTES: readonly string[] = [
   // `lib/service-details.ts`, and a service added there turns on prefetching
   // here and appears in the sitemap without a second edit.
   ...serviceDetailPaths,
+  // App Development's four offering cards are the only ones on the site that
+  // link to a page of their own rather than back to their parent service.
+  ...serviceSubDetails.map((sub) => `/services/${sub.parentSlug}/${sub.slug}`),
 ];
 
 /**

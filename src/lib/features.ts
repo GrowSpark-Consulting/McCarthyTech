@@ -53,8 +53,8 @@ export const leftFeatureHighlights: readonly FeatureHighlight[] = [
     icon: featureIcon('fea-small-icon01.svg'),
   },
   {
-    id: 'kerala-roots',
-    titleLines: ['Kerala Roots,', 'Global Reach'],
+    id: 'chennai-roots',
+    titleLines: ['Chennai Roots,', 'Global Reach'],
     icon: featureIcon('fea-small-icon02.svg'),
   },
   {

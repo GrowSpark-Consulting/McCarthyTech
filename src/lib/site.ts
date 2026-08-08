@@ -27,16 +27,16 @@ export const siteConfig = {
     'app development',
     'UI/UX design',
     'digital marketing',
-    'Kerala software company',
+    'Chennai software company',
   ],
   contact: {
-    email: 'altibix360@gmail.com',
+    email: 'contact@growsparkconsulting.in',
     phone: '+91 7306 339 274',
     /** E.164 form, for `tel:` links. */
     phoneHref: '+917306339274',
     address: {
-      locality: 'Nilamel',
-      region: 'Kerala',
+      locality: 'Chennai',
+      region: 'Tamil Nadu',
       country: 'India',
       countryCode: 'IN',
     },
@@ -48,11 +48,26 @@ export const siteConfig = {
   },
 } as const;
 
-/** Brand mark used in the header and the mobile drawer. */
+/**
+ * Brand mark used in the header, the mobile drawer, and the preloader.
+ *
+ * The image itself is a typeset "Grow Spark" wordmark beside the site's lime
+ * icon — the icon is the original scraped mark reused as-is (it is an abstract
+ * geometric device, not text, so it needed no change), and the wordmark was
+ * redrawn to replace the previous "altibix" text baked into the source PNG's
+ * pixels. Renaming that file in code, on its own, would not have touched what
+ * visitors actually see: the old text was part of the image, not page text, so
+ * no string replacement could reach it.
+ *
+ * `width`/`height` are the new file's true intrinsic pixels. Both header and
+ * drawer placements cap the rendered size with `max-width`/`max-height` rather
+ * than fixed dimensions, so the wider canvas (1075 vs. the original 894) does
+ * not change layout — it only changes what fraction of that cap the mark fills.
+ */
 export const brandLogo = {
-  src: '/assets/img/logo/altibix-logos/altibix-logo.png',
+  src: '/assets/img/logo/grow-spark-logo.png',
   alt: 'Grow Spark',
-  width: 894,
+  width: 1075,
   height: 232,
 } as const;
 

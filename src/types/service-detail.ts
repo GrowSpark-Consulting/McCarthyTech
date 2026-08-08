@@ -531,6 +531,49 @@ export interface ServiceCtaBand {
 }
 
 /** Search-engine copy for one detail route. */
+/** One step in a sub-service's process accordion. */
+export interface ServiceSubProcessStep {
+  /** Stable key for list rendering. */
+  readonly id: string;
+  /** Step name, e.g. "Strategy & Discovery". */
+  readonly title: string;
+  /** What happens during this step. */
+  readonly description: string;
+}
+
+/**
+ * One of the offering cards' own detail pages — the reference's
+ * `service-details` template.
+ *
+ * Only App Development's four cards resolve to real pages on the reference
+ * site; every other service's cards link back to their own parent page. This
+ * type exists for that one case rather than being folded into
+ * {@link ServiceOfferingCard}, so the other seven services cannot accidentally
+ * imply a sub-page that was never built.
+ */
+export interface ServiceSubDetail {
+  /** URL segment under the parent service, e.g. `ios`. */
+  readonly slug: string;
+  /** Parent service's slug, e.g. `app-development`. */
+  readonly parentSlug: string;
+  /** Full `<title>` and meta description. */
+  readonly seo: ServiceSeo;
+  /** Breadcrumb label and `<h1>` text, e.g. "iOS App Development". */
+  readonly title: string;
+  /** Hero image shown above the description. */
+  readonly heroImage: string;
+  /** Sub-heading introducing the description, e.g. "Native Swift & SwiftUI Solutions". */
+  readonly subtitle: string;
+  /** One or two supporting paragraphs. */
+  readonly description: readonly string[];
+  /** The four-step process accordion. */
+  readonly process: readonly ServiceSubProcessStep[];
+  /** Heading above the outcome checklist, e.g. "Services outcome". */
+  readonly outcomeHeading: string;
+  /** What the engagement delivers. */
+  readonly outcomes: readonly string[];
+}
+
 export interface ServiceSeo {
   /** Full `<title>`, authored absolutely so it is not squeezed through the site template twice. */
   readonly title: string;

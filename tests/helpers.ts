@@ -75,36 +75,37 @@ export async function gotoService(page: Page, slug: string): Promise<void> {
  * Navigates and waits for the page to stop moving.
  *
  * Shared by every entry point so no suite can accidentally assert against a
- * page that still has its preloader up or its fallback font in place.
+ * page that is still streaming, or measure text in the fallback font.
  *
  * @param page - The page to prepare.
  * @param path - Application-relative path to open.
  */
 async function gotoSettled(page: Page, path: string): Promise<void> {
   await page.goto(path, { waitUntil: 'load' });
-  await page.evaluate(() => document.fonts.ready);
 
   /*
-   * Wait for the preloader to actually go, rather than sleeping long enough that
-   * it usually has.
+   * Wait for the page's own content, not for a placeholder to disappear.
    *
-   * A fixed 1200ms was the original approach and it held right up until the
-   * machine was under load, at which point a run would fail somewhere near its
-   * end with the curtain still up — the element under test present in the DOM,
-   * correct, and reported `hidden` because it was behind the overlay. Waiting on
-   * the condition removes the whole class of failure and is faster in the normal
-   * case, since it returns the moment the curtain lifts.
+   * Two earlier attempts at this were both wrong in instructive ways. A fixed
+   * 1200ms sleep held until the machine was loaded, then let assertions run
+   * against Next's streaming fallback. Replacing it with "wait for the loading
+   * status to be hidden, `.catch()` if it never is" was worse: the catch
+   * swallowed exactly the case it existed for, so under load the helper gave up
+   * silently and the failure surfaced later as a correct element mysteriously
+   * reporting `hidden`.
    *
-   * Tolerant of absence: not every route mounts a preloader, and one that never
-   * appears should not stall the suite.
+   * Waiting for a real heading inside `main` cannot fail that way. The fallback
+   * in `app/loading.tsx` contains no heading, so this resolves only once the
+   * route has actually streamed. If it times out it throws here, naming the
+   * problem, instead of corrupting an unrelated assertion further down.
    */
-  await page
-    .locator('[role="status"]')
-    .first()
-    .waitFor({ state: 'hidden', timeout: 20_000 })
-    .catch(() => undefined);
+  await page.locator('#main-content :is(h1, h2)').first().waitFor({
+    state: 'attached',
+    timeout: 60_000,
+  });
 
-  // A short beat for the entrance animations the curtain was covering.
+  await page.evaluate(() => document.fonts.ready);
+  // A short beat for the entrance animations the fallback was covering.
   await page.waitForTimeout(400);
 }
 

@@ -24,7 +24,7 @@ export const servicesPageContent = {
   eyebrow: 'What we build',
   /** Rendered as two lines, the second in the accent colour. */
   titleLines: ['Engineering the', 'Future'] as const,
-  lead: 'Premium IT solutions from the heart of Kerala to the rest of the world — we turn complex ideas into scalable digital realities.',
+  lead: 'Premium IT solutions from the heart of Chennai to the rest of the world — we turn complex ideas into scalable digital realities.',
   primaryCta: { label: 'Start your project', href: '/contact' } satisfies NavLink,
   secondaryCta: { label: 'Explore services', href: '#capabilities' } satisfies NavLink,
   /** Ticker of disciplines beneath the hero copy. */
@@ -82,7 +82,7 @@ export const servicesPageReasons = [
   {
     id: 'support',
     title: 'Dedicated Support',
-    description: 'Kerala roots, global reach — premium engineering with a personal touch.',
+    description: 'Chennai roots, global reach — premium engineering with a personal touch.',
   },
 ] as const;
 

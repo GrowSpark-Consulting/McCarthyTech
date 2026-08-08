@@ -13,7 +13,7 @@ export const aboutPageContent = {
       id: 'global-reach',
       title: 'Global Reach',
       description:
-        'Delivering excellence across borders with a local touch, rooted in Kerala, India.',
+        'Delivering excellence across borders with a local touch, rooted in Chennai, Tamil Nadu.',
       icon: '/assets/img/icon/feature-icon01.svg',
     },
     {
