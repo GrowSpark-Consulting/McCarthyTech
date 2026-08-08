@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
-import { gotoService, revealLazyContent } from './helpers';
+import { DECORATIVE_WORDMARK, gotoService, revealLazyContent } from './helpers';
 
 /**
  * The service whose page has been rebuilt against the reference.
@@ -328,10 +328,23 @@ test.describe('service detail — accessibility', () => {
       'Audited at three representative widths only.',
     );
 
+    /*
+     * axe walks every node and computes contrast against rendered pixels, so it
+     * scales with page size rather than with the number of assertions. On this
+     * route it lands around 13s when the machine is idle and has been measured
+     * past the 60s default when it is not — a slow audit, not a failing one.
+     * Given generously so a green run never depends on what else is running.
+     */
+    test.setTimeout(180_000);
+
     await gotoService(page, SLUG);
     await revealLazyContent(page);
 
-    const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+    const results = await new AxeBuilder({ page })
+      .withTags(AXE_TAGS)
+      // A documented WCAG 1.4.3 exemption — see `DECORATIVE_WORDMARK`.
+      .exclude(DECORATIVE_WORDMARK)
+      .analyze();
 
     const summary = results.violations.map(
       (violation) =>

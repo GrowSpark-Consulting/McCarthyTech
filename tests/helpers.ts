@@ -7,6 +7,31 @@ import type { Page } from '@playwright/test';
  * refactor cannot silently break the suite — if one of these disappears, the
  * section has genuinely lost its accessible name and the test *should* fail.
  */
+/**
+ * The footer wordmark, excluded from the colour-contrast rule only.
+ *
+ * It is a 347px rendering of "Grow Spark" at `#121521` on `#00020f` — a measured
+ * **1.14:1**, against a 3:1 threshold for text this size. That is not an
+ * oversight; being barely there is the entire design. Raising it to pass would
+ * put a giant word in direct competition with the footer's actual content, which
+ * is worse for everyone and worst for the low-vision readers the rule protects.
+ *
+ * It qualifies for WCAG 1.4.3's exemption for incidental text: it is
+ * `aria-hidden`, it conveys nothing, and the brand name it repeats is already
+ * carried by the header logo's accessible name and the footer's legal-name link.
+ *
+ * **Scope.** `AxeBuilder.exclude` drops the element from the audit entirely, not
+ * just from the contrast rule — axe has no per-element rule opt-out. That is
+ * acceptable here only because the element is a single `aria-hidden` paragraph
+ * with no children, no interactivity and no role: contrast is the only rule that
+ * could ever apply to it. It would not be acceptable for a container.
+ *
+ * If the wordmark ever stops being `aria-hidden`, gains a link, or becomes the
+ * only place the brand name appears, the exemption lapses and this must go.
+ * Every other element on the page remains audited.
+ */
+export const DECORATIVE_WORDMARK = 'footer .font-black';
+
 export const SECTION_HEADINGS = {
   hero: 'hero-heading',
   about: 'about-heading',

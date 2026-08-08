@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-import { gotoHome, revealLazyContent } from './helpers';
+import { DECORATIVE_WORDMARK, gotoHome, revealLazyContent } from './helpers';
 
 /**
  * WCAG levels enforced. AA is the standard commercial sites are held to;
@@ -28,10 +28,18 @@ test.describe('accessibility', () => {
       'Audited at three representative widths only.',
     );
 
+    // See the note on the service-detail audit: axe scales with page size, and
+    // the homepage is the largest route in the project.
+    test.setTimeout(180_000);
+
     await gotoHome(page);
     await revealLazyContent(page);
 
-    const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+    const results = await new AxeBuilder({ page })
+      .withTags(AXE_TAGS)
+      // A documented WCAG 1.4.3 exemption — see `DECORATIVE_WORDMARK`.
+      .exclude(DECORATIVE_WORDMARK)
+      .analyze();
 
     // Name each violation in the failure message — an empty-array assertion
     // tells you nothing about *what* broke.
