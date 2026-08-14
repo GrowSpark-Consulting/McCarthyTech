@@ -7,14 +7,14 @@ import { ContactFormSection } from '@/components/sections/contact/contact-form-s
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Contact Us — Grow Spark',
+  title: 'Contact Us — McCarthy Tech',
   description:
-    'Get in touch with Grow Spark. Reach out for custom software development, AI implementation, or partnership inquiries.',
+    'Get in touch with McCarthy Tech. Reach out for custom software development, AI implementation, or partnership inquiries.',
   alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact Us — Grow Spark',
+    title: 'Contact Us — McCarthy Tech',
     description:
-      'Get in touch with Grow Spark. Reach out for custom software development, AI implementation, or partnership inquiries.',
+      'Get in touch with McCarthy Tech. Reach out for custom software development, AI implementation, or partnership inquiries.',
     url: '/contact',
   },
 };

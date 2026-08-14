@@ -39,7 +39,7 @@ export const aiChatbotPageContent = {
   },
 
   features: {
-    eyebrow: 'Grow Spark AI chatbot Features',
+    eyebrow: 'McCarthy Tech AI chatbot Features',
     title: 'Build the perfect customer-facing AI agent',
     button: { label: "build your ai chatbot - it's free", href: '/contact' } satisfies NavLink,
     items: [
@@ -115,7 +115,7 @@ export const aiChatbotPageContent = {
       {
         id: 1,
         content:
-          '"Grow Spark now automates over 70% of our customer queries, saving hours of manual work daily. It\'s improved both our response time and overall customer satisfaction."',
+          '"McCarthy Tech now automates over 70% of our customer queries, saving hours of manual work daily. It\'s improved both our response time and overall customer satisfaction."',
         author: 'Priya Ramirez',
         designation: 'Manager - SwiftLogix',
         avatar: '/assets/img/avatar/author_01.png',
@@ -123,7 +123,7 @@ export const aiChatbotPageContent = {
       {
         id: 2,
         content:
-          '"We launched Grow Spark in just minutes, and the impact was immediate. Our support costs dropped by 50%, and customers receive answers instantly, 24/7."',
+          '"We launched McCarthy Tech in just minutes, and the impact was immediate. Our support costs dropped by 50%, and customers receive answers instantly, 24/7."',
         author: 'Sebastian Clark',
         designation: 'CEO & Founder - DocFlow',
         avatar: '/assets/img/avatar/author_02.png',

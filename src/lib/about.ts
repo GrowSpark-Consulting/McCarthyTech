@@ -69,5 +69,5 @@ export const aboutContent = {
   id: 'about',
   eyebrow: 'About Us',
   headingSegments,
-  body: "At Grow Spark IT Solutions Pvt. Ltd., we don't just build software; we build the digital backbone of your success. From local startups to global enterprises, our mission is to deliver premium solutions that drive growth.",
+  body: "At McCarthy Tech IT Solutions Pvt. Ltd., we don't just build software; we build the digital backbone of your success. From local startups to global enterprises, our mission is to deliver premium solutions that drive growth.",
 } as const;

@@ -116,7 +116,7 @@ export function buildWebSiteJsonLd(): string {
  * BreadcrumbList JSON-LD.
  *
  * This is what turns the URL line in a search result into the readable
- * `growspark.com › Services › App Development` trail. Without it Google
+ * `mccarthytech.com › Services › App Development` trail. Without it Google
  * falls back to the raw path, and interior pages lose the context that tells
  * someone what they are about to click.
  *

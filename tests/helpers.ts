@@ -10,7 +10,7 @@ import type { Page } from '@playwright/test';
 /**
  * The footer wordmark, excluded from the colour-contrast rule only.
  *
- * It is a 347px rendering of "Grow Spark" at `#121521` on `#00020f` — a measured
+ * It is a 347px rendering of "McCarthy Tech" at `#121521` on `#00020f` — a measured
  * **1.14:1**, against a 3:1 threshold for text this size. That is not an
  * oversight; being barely there is the entire design. Raising it to pass would
  * put a giant word in direct competition with the footer's actual content, which

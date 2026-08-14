@@ -12,7 +12,7 @@ import { servicesPageContent } from '@/lib/services-page';
  */
 export const metadata: Metadata = {
   title: {
-    absolute: 'Our Services — AI, Web, App & Digital Solutions | Grow Spark',
+    absolute: 'Our Services — AI, Web, App & Digital Solutions | McCarthy Tech',
   },
   description: servicesPageContent.lead,
   alternates: { canonical: '/services' },

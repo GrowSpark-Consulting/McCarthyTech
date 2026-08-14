@@ -57,7 +57,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
     name: 'App Development',
     accent: 'cyan',
     seo: {
-      title: 'App Development — Native & Cross-Platform Mobile Apps | Grow Spark',
+      title: 'App Development — Native & Cross-Platform Mobile Apps | McCarthy Tech',
       description:
         'Scalable iOS and Android applications built for engagement and return. Native Swift and Kotlin, or one cross-platform codebase — whichever your roadmap actually needs.',
     },
@@ -312,7 +312,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
     name: 'Web Development',
     accent: 'mint',
     seo: {
-      title: 'Web Development — High-Performance Sites & Platforms | Grow Spark',
+      title: 'Web Development — High-Performance Sites & Platforms | McCarthy Tech',
       description:
         'Corporate sites and complex web platforms built on modern frameworks, tuned against Core Web Vitals, and structured so your own team can maintain them.',
     },
@@ -544,7 +544,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
     name: 'UI/UX Design',
     accent: 'violet',
     seo: {
-      title: 'UI/UX Design — Research, Interface & Design Systems | Grow Spark',
+      title: 'UI/UX Design — Research, Interface & Design Systems | McCarthy Tech',
       description:
         'User research, wireframes, interface design and a design system your engineers can build from. Interfaces that are obvious to use, not merely pleasant to look at.',
     },
@@ -780,7 +780,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
     name: 'Branding',
     accent: 'lime',
     seo: {
-      title: 'Branding — Identity, Strategy & Guidelines | Grow Spark',
+      title: 'Branding — Identity, Strategy & Guidelines | McCarthy Tech',
       description:
         'Positioning, naming, identity design and a guideline set that keeps your brand consistent across every surface your business touches.',
     },
@@ -1010,7 +1010,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
     name: 'Digital Marketing',
     accent: 'cyan',
     seo: {
-      title: 'Digital Marketing — SEO, Paid & Content Campaigns | Grow Spark',
+      title: 'Digital Marketing — SEO, Paid & Content Campaigns | McCarthy Tech',
       description:
         'Search, paid and content campaigns measured against revenue rather than impressions, with reporting that shows what worked and what was changed.',
     },
@@ -1235,7 +1235,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
     name: 'AI Implementation',
     accent: 'mint',
     seo: {
-      title: 'AI Implementation — LLMs, RAG & Automation | Grow Spark',
+      title: 'AI Implementation — LLMs, RAG & Automation | McCarthy Tech',
       description:
         'Language models, retrieval pipelines and workflow automation wired into the systems you already run, with evaluation and guardrails before anything reaches production.',
     },
@@ -1335,7 +1335,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
      * unstyled upstream. All five are given the same treatment here.
      */
     featuresBand: {
-      eyebrow: 'Grow Spark AI Implementation',
+      eyebrow: 'McCarthy Tech AI Implementation',
       title: 'Enterprise-Grade AI Solutions',
       cta: { label: 'Transform Your Business Today', href: '/contact' },
       cards: [
@@ -1503,7 +1503,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
         'Missed opportunities due to language/region barriers.',
         'Complex, unmaintainable legacy codebases.',
       ],
-      afterTitle: 'With Grow Spark AI',
+      afterTitle: 'With McCarthy Tech AI',
       after: [
         'Automated workflows operating 24/7.',
         'Scalable architecture for enterprise growth.',
@@ -1616,7 +1616,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
     name: 'AI Chatbot',
     accent: 'violet',
     seo: {
-      title: 'AI Chatbot Development — Support & Sales Assistants | Grow Spark',
+      title: 'AI Chatbot Development — Support & Sales Assistants | McCarthy Tech',
       description:
         'Conversational assistants that answer from your documentation, cite their sources, hand over cleanly to a human, and decline instead of inventing an answer.',
     },
@@ -1641,7 +1641,7 @@ const serviceDetailsBySlug: Record<ServiceSlug, ServiceDetail> = {
     name: 'AI Marketing',
     accent: 'lime',
     seo: {
-      title: 'AI Marketing — Personalisation & Campaign Automation | Grow Spark',
+      title: 'AI Marketing — Personalisation & Campaign Automation | McCarthy Tech',
       description:
         'Segmentation, creative variation and lifecycle automation driven by your own customer data, with a person approving everything that reaches an audience.',
     },

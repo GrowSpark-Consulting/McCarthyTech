@@ -17,7 +17,7 @@ const serviceSubDetailsBySlug: Record<string, ServiceSubDetail> = {
     slug: 'ios',
     parentSlug: 'app-development',
     seo: {
-      title: 'iOS App Development — Native Swift & SwiftUI | Grow Spark',
+      title: 'iOS App Development — Native Swift & SwiftUI | McCarthy Tech',
       description:
         'Native iOS applications built with Swift and SwiftUI, engineered for the full Apple ecosystem — iPhone, iPad and Apple Watch.',
     },
@@ -67,7 +67,7 @@ const serviceSubDetailsBySlug: Record<string, ServiceSubDetail> = {
     slug: 'android',
     parentSlug: 'app-development',
     seo: {
-      title: 'Android App Development — Kotlin & Jetpack Compose | Grow Spark',
+      title: 'Android App Development — Kotlin & Jetpack Compose | McCarthy Tech',
       description:
         'Custom Android applications built with Kotlin and Jetpack Compose, tuned for consistency across a fragmented device landscape.',
     },
@@ -117,7 +117,7 @@ const serviceSubDetailsBySlug: Record<string, ServiceSubDetail> = {
     slug: 'cross-platform',
     parentSlug: 'app-development',
     seo: {
-      title: 'Cross-Platform App Development — Flutter & React Native | Grow Spark',
+      title: 'Cross-Platform App Development — Flutter & React Native | McCarthy Tech',
       description:
         'One codebase, both platforms. Flutter and React Native apps with near-native performance and a shorter path to launch.',
     },
@@ -167,7 +167,7 @@ const serviceSubDetailsBySlug: Record<string, ServiceSubDetail> = {
     slug: 'ui-ux',
     parentSlug: 'app-development',
     seo: {
-      title: 'UI/UX Design for Mobile — Research to High-Fidelity | Grow Spark',
+      title: 'UI/UX Design for Mobile — Research to High-Fidelity | McCarthy Tech',
       description:
         'User research, wireframing and interactive prototyping for mobile apps — interfaces that are accessible, intuitive and on-brand.',
     },

@@ -75,7 +75,7 @@ const appDevelopmentSections: ServiceSections = {
     cta: DISCOVERY_CTA,
   },
   reasons: {
-    eyebrow: 'The Grow Spark advantage',
+    eyebrow: 'The McCarthy Tech advantage',
     heading: 'Why Leading Brands Choose Us',
     reasons: [
       {

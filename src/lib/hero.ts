@@ -12,7 +12,7 @@ export const heroContent = {
   /** Rendered as the page's single `<h1>`. */
   headline: 'Empowering Businesses Through Innovative Technology Solutions',
   subheadline:
-    'Premium IT solutions from the heart of Chennai to the rest of the world. We specialize in turning complex ideas into scalable digital realities.',
+    'Premium IT solutions from Singapore to the rest of the world. We specialize in turning complex ideas into scalable digital realities.',
   cta: { label: 'Start Your Project', href: '/contact' } satisfies NavLink,
   scrollCue: {
     label: 'Scroll',

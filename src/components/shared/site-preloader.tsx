@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
-import { brandLogo, siteConfig } from '@/lib/site';
+import { siteConfig } from '@/lib/site';
 
 /**
  * Hard ceiling on how long the curtain may stay up.
@@ -79,15 +79,9 @@ export function SitePreloader() {
               compete with the Largest Contentful Paint element for early
               bandwidth. The mark is a few kilobytes and paints well within the
               curtain's lifetime either way. */}
-          <Image
-            src={brandLogo.src}
-            alt=""
-            width={brandLogo.width}
-            height={brandLogo.height}
-            loading="eager"
-            sizes="180px"
-            className="h-auto w-[180px] object-contain"
-          />
+          <span className="font-heading text-3xl font-bold tracking-tight text-white">
+            McCarthy Tech
+          </span>
 
           {/* Indeterminate progress rail: a lime sliver sweeping a dim track. */}
           <span className="relative block h-px w-[140px] overflow-hidden bg-white/15">

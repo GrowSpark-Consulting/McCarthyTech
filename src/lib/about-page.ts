@@ -3,7 +3,7 @@ import type { NavLink } from '@/types/navigation';
 export const aboutPageContent = {
   breadcrumb: [
     { label: 'home', href: '/' },
-    { label: 'About Grow Spark', href: '/about' },
+    { label: 'About McCarthy Tech', href: '/about' },
   ],
   title: 'Engineering the Future',
   breadcrumbBg: '/assets/img/bg/bootcamp-bg.png',
@@ -13,7 +13,7 @@ export const aboutPageContent = {
       id: 'global-reach',
       title: 'Global Reach',
       description:
-        'Delivering excellence across borders with a local touch, rooted in Chennai, Tamil Nadu.',
+        'Delivering excellence across borders with a local touch, rooted in Singapore.',
       icon: '/assets/img/icon/feature-icon01.svg',
     },
     {
@@ -40,7 +40,7 @@ export const aboutPageContent = {
   },
 
   whyChooseUs: {
-    eyebrow: 'The Grow Spark Advantage',
+    eyebrow: 'The McCarthy Tech Advantage',
     title: 'Why businesses choose us?',
     bg: '/assets/img/bg/feature-bg.jpg',
     features: [
@@ -71,7 +71,7 @@ export const aboutPageContent = {
     subtitle: 'Ready to Transform?',
     title: 'Initiate your strategic digital transformation',
     content:
-      'We are a team of innovators dedicated to delivering cutting-edge solutions that help businesses achieve remarkable growth and success. Partner with Grow Spark today.',
+      'We are a team of innovators dedicated to delivering cutting-edge solutions that help businesses achieve remarkable growth and success. Partner with McCarthy Tech today.',
     button: { label: 'Begin Today with us', href: '/contact' } satisfies NavLink,
     awards: [
       '/assets/img/award/img01.png',

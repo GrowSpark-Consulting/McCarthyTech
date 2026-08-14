@@ -26,7 +26,7 @@ export const industriesServedContent = {
   id: 'industries-served',
   eyebrow: 'Industries Served',
   heading: 'Industries We Are Serving',
-  accessibleLabel: 'Industries Grow Spark serves',
+  accessibleLabel: 'Industries McCarthy Tech serves',
 } as const;
 
 /**

@@ -75,8 +75,8 @@ function buildBreadcrumb(service: ServiceDetail): readonly NavLink[] {
  *
  * Each page carries its own absolute title, description, canonical, and social
  * card. Titles are authored absolutely rather than run through the site's
- * `%s | Grow Spark` template, because they already name the brand — the
- * template would produce "… | Grow Spark | Grow Spark".
+ * `%s | McCarthy Tech` template, because they already name the brand — the
+ * template would produce "… | McCarthy Tech | McCarthy Tech".
  *
  * Returning empty metadata for an unknown slug is unreachable while
  * `dynamicParams` is `false`, but Next still types the params as arbitrary

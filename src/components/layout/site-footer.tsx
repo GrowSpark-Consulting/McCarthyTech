@@ -23,7 +23,7 @@ const SOCIAL_GLYPHS = {
  *
  * Three bands, matching the reference:
  *
- * 1. A giant "Grow Spark" watermark with the email address on a gradient pill
+ * 1. A giant "McCarthy Tech" watermark with the email address on a gradient pill
  *    floating over its centre. The gradient pans continuously, which is done by
  *    over-sizing the gradient to 200% and animating its *position* — the pill
  *    itself never moves.

@@ -6,12 +6,12 @@
  * here once so the copy can never drift between surfaces.
  */
 export const siteConfig = {
-  name: 'Grow Spark',
-  legalName: 'Grow Spark IT Solutions Pvt. Ltd.',
-  title: 'Grow Spark | Premium IT Solutions',
-  titleTemplate: '%s | Grow Spark',
+  name: 'McCarthy Tech',
+  legalName: 'McCarthy Tech IT Solutions Pvt. Ltd.',
+  title: 'McCarthy Tech | Premium IT Solutions',
+  titleTemplate: '%s | McCarthy Tech',
   description:
-    'Grow Spark offers premium IT solutions, AI implementation, and full-stack development. Bridging the gap between visionary ideas and functional technology.',
+    'McCarthy Tech offers premium IT solutions, AI implementation, and full-stack development. Bridging the gap between visionary ideas and functional technology.',
   /**
    * Absolute origin used for canonical URLs, Open Graph tags, and the sitemap.
    * Override per-environment with `NEXT_PUBLIC_SITE_URL`.
@@ -27,31 +27,31 @@ export const siteConfig = {
     'app development',
     'UI/UX design',
     'digital marketing',
-    'Chennai software company',
+    'Singapore software company',
   ],
   contact: {
-    email: 'contact@growsparkconsulting.in',
-    phone: '+91 7306 339 274',
+    email: 'info@mccathy.tech',
+    phone: '+91 8637 609 300',
     /** E.164 form, for `tel:` links. */
-    phoneHref: '+917306339274',
+    phoneHref: '+918637609300',
     address: {
-      locality: 'Chennai',
-      region: 'Tamil Nadu',
-      country: 'India',
-      countryCode: 'IN',
+      locality: 'Singapore',
+      region: 'Singapore',
+      country: 'Singapore',
+      countryCode: 'SG',
     },
   },
   social: {
-    linkedin: 'https://www.linkedin.com/company/altibix-codelab-pvt-ltd',
-    instagram: 'https://www.instagram.com/altibix/',
-    google: 'https://share.google/zZw0x8Q0XfgnaXSFq',
+    linkedin: '#',
+    instagram: '#',
+    google: '#',
   },
 } as const;
 
 /**
  * Brand mark used in the header, the mobile drawer, and the preloader.
  *
- * The image itself is a typeset "Grow Spark" wordmark beside the site's lime
+ * The image itself is a typeset "McCarthy Tech" wordmark beside the site's lime
  * icon — the icon is the original scraped mark reused as-is (it is an abstract
  * geometric device, not text, so it needed no change), and the wordmark was
  * redrawn to replace the previous "altibix" text baked into the source PNG's
@@ -66,7 +66,7 @@ export const siteConfig = {
  */
 export const brandLogo = {
   src: '/assets/img/logo/grow-spark-logo.png',
-  alt: 'Grow Spark',
+  alt: 'McCarthy Tech',
   width: 1075,
   height: 232,
 } as const;

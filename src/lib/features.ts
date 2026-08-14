@@ -16,7 +16,7 @@ function featureIcon(file: string): ImageAsset {
 
 /** Section copy. */
 export const featuresContent = {
-  eyebrow: 'The Grow Spark Advantage',
+  eyebrow: 'The McCarthy Tech Advantage',
   headingBefore: 'Why businesses ',
   headingAfter: ' choose us',
   /** Animated ornament inlaid between the two heading fragments. */
@@ -53,8 +53,8 @@ export const leftFeatureHighlights: readonly FeatureHighlight[] = [
     icon: featureIcon('fea-small-icon01.svg'),
   },
   {
-    id: 'chennai-roots',
-    titleLines: ['Chennai Roots,', 'Global Reach'],
+    id: 'singapore-roots',
+    titleLines: ['Singapore Roots,', 'Global Reach'],
     icon: featureIcon('fea-small-icon02.svg'),
   },
   {

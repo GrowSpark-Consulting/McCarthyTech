@@ -19,7 +19,7 @@ export interface FooterSocialLink {
 /** Footer content. */
 export const footerContent = {
   /** Giant decorative wordmark behind the email pill. */
-  watermark: 'Grow Spark',
+  watermark: 'McCarthy Tech',
   email: siteConfig.contact.email,
   phone: siteConfig.contact.phone,
   phoneHref: siteConfig.contact.phoneHref,

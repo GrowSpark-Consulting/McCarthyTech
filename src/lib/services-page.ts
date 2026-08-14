@@ -24,7 +24,7 @@ export const servicesPageContent = {
   eyebrow: 'What we build',
   /** Rendered as two lines, the second in the accent colour. */
   titleLines: ['Engineering the', 'Future'] as const,
-  lead: 'Premium IT solutions from the heart of Chennai to the rest of the world — we turn complex ideas into scalable digital realities.',
+  lead: 'Premium IT solutions from Singapore to the rest of the world — we turn complex ideas into scalable digital realities.',
   primaryCta: { label: 'Start your project', href: '/contact' } satisfies NavLink,
   secondaryCta: { label: 'Explore services', href: '#capabilities' } satisfies NavLink,
   /** Ticker of disciplines beneath the hero copy. */
@@ -42,7 +42,7 @@ export const servicesPageContent = {
   ],
   gridEyebrow: 'Our capabilities',
   gridHeading: 'Everything you need, under one roof',
-  whyEyebrow: 'The Grow Spark advantage',
+  whyEyebrow: 'The McCarthy Tech advantage',
   whyHeading: 'Why partner with us',
   ctaEyebrow: "Let's talk",
   ctaHeading: 'Have a project in mind?',
@@ -82,7 +82,7 @@ export const servicesPageReasons = [
   {
     id: 'support',
     title: 'Dedicated Support',
-    description: 'Chennai roots, global reach — premium engineering with a personal touch.',
+    description: 'Singapore roots, global reach — premium engineering with a personal touch.',
   },
 ] as const;
 

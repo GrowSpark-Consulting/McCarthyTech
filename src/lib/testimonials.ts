@@ -47,7 +47,7 @@ export const testimonials: readonly Testimonial[] = [
     name: 'Thoufeek. H',
     role: 'Local Guide',
     quote:
-      'I would recommend Grow Spark to anyone looking for a professional website. Not only is the website design excellent but the quality and speed of service from Grow Spark has been excellent.',
+      'I would recommend McCarthy Tech to anyone looking for a professional website. Not only is the website design excellent but the quality and speed of service from McCarthy Tech has been excellent.',
     source: 'Google',
     rating: 5,
   },
@@ -56,7 +56,7 @@ export const testimonials: readonly Testimonial[] = [
     name: 'Anjana AS',
     role: 'Reviewer',
     quote:
-      'In my experience Grow Spark IT Solutions Pvt Ltd is the best software development company in Chennai, Tamil Nadu. The entire team was well experienced and knowledgeable. They also 100% dedicated to provide high quality services on time.',
+      'In my experience McCarthy Tech IT Solutions Pvt Ltd is the best software development company in Singapore. The entire team was well experienced and knowledgeable. They also 100% dedicated to provide high quality services on time.',
     source: 'Google',
     rating: 5,
   },
@@ -74,7 +74,7 @@ export const testimonials: readonly Testimonial[] = [
     name: 'Mymoona',
     role: 'Reviewer',
     quote:
-      'I had a great experience working with Grow Spark IT Solutions Pvt. Ltd.. They are an emerging AI implementation and software development company rooted in Chennai, and their expertise truly stands out.',
+      'I had a great experience working with McCarthy Tech IT Solutions Pvt. Ltd.. They are an emerging AI implementation and software development company rooted in Singapore, and their expertise truly stands out.',
     source: 'Google',
     rating: 5,
   },

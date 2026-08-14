@@ -281,7 +281,7 @@ export const jobListings: readonly JobListing[] = [
     type: 'Full time',
     slug: 'digital-marketer',
     description:
-      'We are hiring a Digital Marketer to manage, optimize, and scale Growspark marketing campaigns, content strategies, and lead generation.',
+      'We are hiring a Digital Marketer to manage, optimize, and scale McCarthy Tech marketing campaigns, content strategies, and lead generation.',
     details: {
       responsibilities: [
         'Plan, launch, and optimize digital marketing campaigns across Meta, Google, and LinkedIn.',

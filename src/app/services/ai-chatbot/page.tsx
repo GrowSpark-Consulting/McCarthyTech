@@ -9,14 +9,14 @@ import { AiChatbotProcess } from '@/components/sections/ai-chatbot/ai-chatbot-pr
 import { AiChatbotTestimonials } from '@/components/sections/ai-chatbot/ai-chatbot-testimonials';
 
 export const metadata: Metadata = {
-  title: { absolute: 'AI Chatbot | Grow Spark' },
+  title: { absolute: 'AI Chatbot | McCarthy Tech' },
   description:
-    'Intelligent AI chatbot solutions from Grow Spark — automate support and engagement with natural, 24/7 conversations.',
+    'Intelligent AI chatbot solutions from McCarthy Tech — automate support and engagement with natural, 24/7 conversations.',
   alternates: { canonical: '/services/ai-chatbot' },
   openGraph: {
-    title: 'AI Chatbot | Grow Spark',
+    title: 'AI Chatbot | McCarthy Tech',
     description:
-      'Intelligent AI chatbot solutions from Grow Spark — automate support and engagement with natural, 24/7 conversations.',
+      'Intelligent AI chatbot solutions from McCarthy Tech — automate support and engagement with natural, 24/7 conversations.',
     url: '/services/ai-chatbot',
   },
 };

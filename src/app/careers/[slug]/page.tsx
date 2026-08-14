@@ -27,12 +27,12 @@ export async function generateMetadata({ params }: JobDetailPageProps): Promise<
   const path = `/careers/${job.slug}`;
 
   return {
-    title: `${job.title} — Careers at Grow Spark`,
+    title: `${job.title} — Careers at McCarthy Tech`,
     description: job.description,
     alternates: { canonical: path },
     openGraph: {
       type: 'website',
-      title: `${job.title} — Careers at Grow Spark`,
+      title: `${job.title} — Careers at McCarthy Tech`,
       description: job.description,
       url: path,
     },
