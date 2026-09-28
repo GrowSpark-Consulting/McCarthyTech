@@ -7,9 +7,8 @@ import type { Project, ProjectsPageContent } from '@/types/projects';
  * and every project in `projects`. Nothing in the components needs to change to
  * add, remove, reorder or restyle a project's content.
  *
- * The projects below are placeholders, as are their images in
- * `public/assets/img/projects/`. Replace an image by pointing `image` at your
- * own file (any format — a 16:9 screenshot fits the frame exactly).
+ * Images live in `public/assets/img/projects/`. A 16:9 image fits the frame
+ * exactly; set `imageTone: 'light'` on a project whose image is mostly light.
  */
 export const projectsPageContent: ProjectsPageContent = {
   metaTitle: 'Our Projects',
@@ -38,58 +37,53 @@ export const projects: readonly Project[] = [
     featured: true,
   },
   {
-    id: 'project-02',
-    title: 'Project Two',
-    category: 'Mobile App',
+    id: 'nenjam-matrimony',
+    title: 'Nenjam Matrimony',
+    category: 'Mobile App · Matrimony',
     description:
-      'A cross-platform mobile app with offline support and real-time sync, designed around a few everyday tasks done well.',
-    image: '/assets/img/projects/project-02.svg',
-    technologies: ['Flutter', 'Firebase'],
+      'A premium, Tamil-first matrimony app — a guided 12-step profile wizard, verified profiles, and matches scored on horoscope compatibility, personality and partner preferences, so families find a match on more than filters.',
+    image: '/assets/img/projects/nenjam-matrimony.webp',
+    technologies: ['Flutter', 'Riverpod', 'NestJS', 'PostgreSQL', 'Firebase Auth'],
     year: '2026',
-    liveUrl: '#',
   },
   {
-    id: 'project-03',
-    title: 'Project Three',
-    category: 'AI / ML',
+    id: 'chelliah-enterprises',
+    title: 'Chelliah Enterprises',
+    category: 'Business Website · Construction',
     description:
-      'A machine-learning service that turns unstructured documents into structured data, with a review step for anything it is unsure of.',
-    image: '/assets/img/projects/project-03.svg',
-    technologies: ['Python', 'PyTorch', 'FastAPI'],
-    year: '2025',
-    liveUrl: '#',
+      'A lead-generating website for a Chennai waterproofing and epoxy-flooring contractor — services for industrial, commercial and residential work, a project portfolio, and a site-inspection enquiry form with WhatsApp contact.',
+    image: '/assets/img/projects/chelliah-enterprises.webp',
+    imageTone: 'light',
+    technologies: ['Next.js'],
+    liveUrl: 'https://chelliah-enterprises.vercel.app/',
   },
   {
-    id: 'project-04',
-    title: 'Project Four',
-    category: 'UI / UX Design',
+    id: 'dishpop',
+    title: 'DishPop',
+    category: 'SaaS · Restaurant Tech',
     description:
-      'A design system and product redesign that brought a sprawling interface down to one consistent set of components.',
-    image: '/assets/img/projects/project-04.svg',
-    technologies: ['Figma', 'Design Tokens'],
-    year: '2025',
-    liveUrl: '#',
+      'A next-generation dining platform that lets guests see dishes in photorealistic 3D and AR before they order — with nutritional insights, live order management and offline-capable restaurant billing in one system.',
+    image: '/assets/img/projects/dishpop.webp',
+    imageTone: 'light',
+    liveUrl: 'https://www.dishpop.in/',
   },
   {
-    id: 'project-05',
-    title: 'Project Five',
-    category: 'Backend & Cloud',
+    id: 'library-management-system',
+    title: 'Library Management System',
+    category: 'ERP · Education',
     description:
-      'An event-driven backend on managed cloud infrastructure, built to scale with demand and deploy without downtime.',
-    image: '/assets/img/projects/project-05.svg',
-    technologies: ['Node.js', 'AWS', 'Docker'],
-    year: '2025',
-    liveUrl: '#',
+      'Library automation software that runs every daily operation — acquisition and cataloguing, circulation, serial control and MIS reports — with RFID stock management and an online catalogue (OPAC) on web and mobile.',
+    image: '/assets/img/projects/library-management-system.webp',
+    imageTone: 'light',
   },
   {
-    id: 'project-06',
-    title: 'Project Six',
-    category: 'E-commerce',
+    id: 'growspark-consulting',
+    title: 'Grow Spark Consulting',
+    category: 'Corporate Website · Consulting',
     description:
-      'A headless storefront with a custom checkout, tuned for fast page loads and a smooth path from product to purchase.',
-    image: '/assets/img/projects/project-06.svg',
-    technologies: ['Shopify', 'React'],
-    year: '2024',
-    liveUrl: '#',
+      'The website for a business-transformation consultancy — AI automation, custom software and digital delivery, its Business Transformation Framework, case studies and industry pages, built to turn visitors into strategy sessions.',
+    image: '/assets/img/projects/growspark-consulting.webp',
+    technologies: ['Next.js'],
+    liveUrl: 'https://www.growsparkconsulting.com/',
   },
 ];

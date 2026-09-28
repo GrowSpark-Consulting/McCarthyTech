@@ -54,7 +54,7 @@ export function ProjectItem({ project, index }: ProjectItemProps) {
   const titleId = `project-${project.id}-title`;
   const facts = projectFacts(project);
   const hasSource = Boolean(project.githubUrl) && project.githubUrl !== '#';
-  const href = project.liveUrl ?? '#';
+  const href = project.liveUrl;
 
   return (
     <article
@@ -147,15 +147,18 @@ export function ProjectItem({ project, index }: ProjectItemProps) {
             </ul>
           ) : null}
 
-          <div className="mt-10">
-            <AgencyButton
-              size="project"
-              href={href}
-              label={projectsPageContent.cardCta}
-              srSuffix={` about ${project.title}`}
-              newTab={EXTERNAL_URL.test(href)}
-            />
-          </div>
+          {/* No link, no button — a "read more" that goes nowhere is worse than none. */}
+          {href === undefined ? null : (
+            <div className="mt-10">
+              <AgencyButton
+                size="project"
+                href={href}
+                label={projectsPageContent.cardCta}
+                srSuffix={` about ${project.title}`}
+                newTab={EXTERNAL_URL.test(href)}
+              />
+            </div>
+          )}
         </div>
       </div>
 
