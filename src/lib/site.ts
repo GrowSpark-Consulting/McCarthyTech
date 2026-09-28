@@ -7,7 +7,7 @@
  */
 export const siteConfig = {
   name: 'McCarthy Tech',
-  legalName: 'McCarthy Tech IT Solutions Pvt. Ltd.',
+  legalName: 'McCarthy Labs Pvt Ltd',
   title: 'McCarthy Tech | Premium IT Solutions',
   titleTemplate: '%s | McCarthy Tech',
   description:
@@ -35,6 +35,8 @@ export const siteConfig = {
     /** E.164 form, for `tel:` links. */
     phoneHref: '+918637609300',
     address: {
+      street: '1 Bukit Batok Cres, #04-48',
+      postalCode: '658064',
       locality: 'Singapore',
       region: 'Singapore',
       country: 'Singapore',
@@ -49,26 +51,23 @@ export const siteConfig = {
 } as const;
 
 /**
- * Brand mark used in the header, the mobile drawer, and the preloader.
+ * The official McCarthy Tech logo — the lime mark on a transparent canvas.
  *
- * The image itself is a typeset "McCarthy Tech" wordmark beside the site's lime
- * icon — the icon is the original scraped mark reused as-is (it is an abstract
- * geometric device, not text, so it needed no change), and the wordmark was
- * redrawn to replace the previous "altibix" text baked into the source PNG's
- * pixels. Renaming that file in code, on its own, would not have touched what
- * visitors actually see: the old text was part of the image, not page text, so
- * no string replacement could reach it.
+ * The one source for every place the brand mark appears: the header, the mobile
+ * drawer, the preloader, the favicon, the Organization structured data, and the
+ * two framed ornaments (the homepage AI-stream badge and the AI Implementation
+ * feature card). The file is served exactly as supplied — only the box it is
+ * drawn into changes per placement, always with `object-contain` so the mark
+ * keeps its proportions.
  *
- * `width`/`height` are the new file's true intrinsic pixels. Both header and
- * drawer placements cap the rendered size with `max-width`/`max-height` rather
- * than fixed dimensions, so the wider canvas (1075 vs. the original 894) does
- * not change layout — it only changes what fraction of that cap the mark fills.
+ * `width`/`height` are the file's intrinsic pixels, so `next/image` can reserve
+ * the right aspect ratio before it decodes.
  */
 export const brandLogo = {
-  src: '/assets/img/logo/grow-spark-logo.png',
+  src: '/assets/img/logo/mccarthy-tech-logo.png',
   alt: 'McCarthy Tech',
-  width: 1075,
-  height: 232,
+  width: 846,
+  height: 655,
 } as const;
 
 export type SiteConfig = typeof siteConfig;

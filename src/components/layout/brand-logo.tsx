@@ -1,13 +1,51 @@
 import Image from 'next/image';
 import { AppLink } from '@/components/ui/app-link';
 
-import { siteConfig } from '@/lib/site';
+import { brandLogo, siteConfig } from '@/lib/site';
 import { cn } from '@/lib/utils';
+
+export interface BrandMarkProps {
+  /**
+   * Sizes the box the mark is drawn into. Set one dimension and `auto` on the
+   * other; the file's aspect ratio supplies the rest.
+   */
+  readonly className?: string;
+  /** Whether to fetch the image at high priority. */
+  readonly priority?: boolean;
+  /** `eager` fetches immediately without adding a preload to the head. */
+  readonly loading?: 'eager' | 'lazy';
+}
+
+/**
+ * The McCarthy Tech logo image, unframed and unlinked.
+ *
+ * Every placement draws the mark through this component, so there is exactly
+ * one implementation of it. Only the box is ever sized — `object-contain` means
+ * a box of any shape can neither stretch nor crop the mark.
+ *
+ * The alt text is empty: each placement is either inside a link that already
+ * names the company, or purely decorative.
+ *
+ * @param props - See {@link BrandMarkProps}.
+ */
+export function BrandMark({ className, priority = false, loading }: BrandMarkProps) {
+  return (
+    <Image
+      src={brandLogo.src}
+      alt=""
+      width={brandLogo.width}
+      height={brandLogo.height}
+      priority={priority}
+      loading={loading}
+      className={cn('object-contain', className)}
+    />
+  );
+}
 
 export interface BrandLogoProps {
   /**
-   * Which surface the mark is rendering on. `header` caps by width, `drawer`
-   * caps by height, matching the reference's two sizing rules.
+   * Which surface the logo is rendering on. Only the mark's height differs
+   * between the header bar and the mobile drawer.
    */
   readonly placement?: 'header' | 'drawer';
   /**
@@ -19,51 +57,30 @@ export interface BrandLogoProps {
 }
 
 /**
- * The McCarthy Tech wordmark, wrapped in a home link.
+ * The McCarthy Tech logo, wrapped in a home link.
  *
  * The link's accessible name is the company name plus destination rather than
- * the bare alt text, so a screen-reader user hears where it goes. The icon
- * image carries an empty alt because the surrounding link already names it —
- * announcing both would read the brand twice.
+ * the bare alt text, so a screen-reader user hears where it goes. The image
+ * carries an empty alt because the link already names it — announcing both
+ * would read the brand twice.
  *
  * @param props - See {@link BrandLogoProps}.
  */
 export function BrandLogo({ placement = 'header', priority = false, className }: BrandLogoProps) {
-  const isHeader = placement === 'header';
-
   return (
     <AppLink
       href="/"
       aria-label={`${siteConfig.name} — home`}
       className={cn(
-        'inline-flex shrink-0 items-center gap-2 transition-opacity duration-300 ease-out hover:opacity-80',
+        'inline-flex shrink-0 items-center transition-opacity duration-300 ease-out hover:opacity-80',
         'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime',
         className,
       )}
     >
-      {/* Lime green icon from the original logo */}
-      <Image
-        src="/assets/img/logo/grow-spark-logo.png"
-        alt=""
-        width={1075}
-        height={232}
+      <BrandMark
         priority={priority}
-        sizes={isHeader ? '40px' : '32px'}
-        className={cn(
-          'h-auto w-auto object-contain',
-          isHeader ? 'max-h-[36px] max-w-[40px] max-bs-md:max-h-[30px]' : 'max-h-8 max-w-[36px]',
-        )}
-        style={{ objectPosition: 'left center', clipPath: 'inset(0 75% 0 0)' }}
+        className={cn('w-auto', placement === 'header' ? 'h-11 max-bs-lg:h-9' : 'h-10')}
       />
-      {/* Text wordmark */}
-      <span
-        className={cn(
-          'font-heading font-bold tracking-tight text-white',
-          isHeader ? 'text-xl max-bs-md:text-lg' : 'text-lg',
-        )}
-      >
-        McCarthy Tech
-      </span>
     </AppLink>
   );
 }

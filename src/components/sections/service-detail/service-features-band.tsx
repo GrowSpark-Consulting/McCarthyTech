@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { BrandMark } from '@/components/layout/brand-logo';
 import { LazyVideo } from '@/components/shared/lazy-video';
 import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import { Container } from '@/components/ui/container';
@@ -18,23 +19,17 @@ const HEADING_ID = 'service-features-heading';
 const CARD_STAGGER_S = 0.1;
 
 /**
- * The four overlays, each with its own placement and idle motion.
+ * The image overlays, each with its own placement and idle motion.
  *
  * Held as a lookup rather than composed at the call site so a card's data only
- * has to name one, and so a fifth ornament is a compile error here rather than a
- * card that silently renders bare.
+ * has to name one, and so a new ornament is a compile error here rather than a
+ * card that silently renders bare. The `logo` ornament is drawn rather than an
+ * image, so it is rendered by {@link LogoOrnament} instead.
  */
 const ORNAMENTS: Record<
-  ServiceFeatureOrnament,
+  Exclude<ServiceFeatureOrnament, 'logo'>,
   { readonly src: string; readonly className: string; readonly size: number }
 > = {
-  /** Centred on the clip, breathing. */
-  logo: {
-    src: '/assets/img/feature/logo.png',
-    className:
-      'left-1/2 top-[20%] -translate-x-1/2 max-bs-lg:top-[10%] max-bs-md:top-[14%] max-bs-md:max-w-[22%] [&_img]:animate-zoominup [&_img]:motion-reduce:animate-none',
-    size: 120,
-  },
   /** A scanning bar pinned to the clip's left edge. */
   scan: {
     src: '/assets/img/feature/scan.png',
@@ -56,6 +51,38 @@ const ORNAMENTS: Record<
   },
 };
 
+/** Where the logo ornament sits: centred on the clip. */
+const LOGO_ORNAMENT_CLASS =
+  'left-1/2 top-[20%] -translate-x-1/2 max-bs-lg:top-[10%] max-bs-md:top-[14%] max-bs-md:max-w-[22%]';
+
+/**
+ * The logo in a glowing ring, breathing.
+ *
+ * Keeps the 147×160 footprint of the ring artwork it replaces — the ring a 93px
+ * circle in the box's upper part — so the placement above is unchanged, and is
+ * sized in percentages so it scales under the `max-w-[22%]` cap on phones. The
+ * ring, its glow and the breathing zoom are all on the frame; the logo inside
+ * is the untouched file.
+ */
+function LogoOrnament() {
+  return (
+    <span className="relative block aspect-[147/160] w-[147px] max-w-full animate-zoominup motion-reduce:animate-none">
+      <span
+        className={cn(
+          'absolute left-[18.4%] top-[16.9%] aspect-square w-[63.3%] rounded-full',
+          'bg-[linear-gradient(225deg,#25a5a3_0%,#336fbd_100%)]',
+          'shadow-[0_0_18px_2px_rgba(0,202,158,0.35),0_0_32px_6px_rgba(22,89,211,0.22)]',
+          'max-bs-md:shadow-[0_0_10px_1px_rgba(0,202,158,0.35),0_0_18px_3px_rgba(22,89,211,0.22)]',
+        )}
+      >
+        <span className="absolute inset-[11%] flex items-center justify-center rounded-full bg-[#020411]">
+          <BrandMark className="h-auto w-[58%]" />
+        </span>
+      </span>
+    </span>
+  );
+}
+
 /**
  * `.xb-item--inner.xb-border` — the frosted panel every card sits in.
  *
@@ -74,7 +101,8 @@ interface FeatureCardProps {
 
 /** One card: a clip, an optional ornament over it, and a caption below. */
 function FeatureCard({ card, index }: FeatureCardProps) {
-  const ornament = card.ornament === undefined ? undefined : ORNAMENTS[card.ornament];
+  const ornament =
+    card.ornament === undefined || card.ornament === 'logo' ? undefined : ORNAMENTS[card.ornament];
 
   return (
     <ScrollReveal
@@ -97,6 +125,12 @@ function FeatureCard({ card, index }: FeatureCardProps) {
               }
             />
           </div>
+
+          {card.ornament === 'logo' ? (
+            <span aria-hidden="true" className={cn('absolute', LOGO_ORNAMENT_CLASS)}>
+              <LogoOrnament />
+            </span>
+          ) : null}
 
           {ornament === undefined ? null : (
             <span aria-hidden="true" className={cn('absolute', ornament.className)}>

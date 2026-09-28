@@ -23,7 +23,7 @@ export const footerContent = {
   email: siteConfig.contact.email,
   phone: siteConfig.contact.phone,
   phoneHref: siteConfig.contact.phoneHref,
-  location: `${siteConfig.contact.address.locality}, ${siteConfig.contact.address.region}, ${siteConfig.contact.address.country}`,
+  location: `${siteConfig.contact.address.street}, ${siteConfig.contact.address.locality} ${siteConfig.contact.address.postalCode}`,
   copyrightYear: 2025,
 } as const;
 

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { BrandMark } from '@/components/layout/brand-logo';
 import { StreamPanels } from '@/components/sections/industries/stream-panels';
 import { StreamPill } from '@/components/sections/industries/stream-pill';
 import { Container } from '@/components/ui/container';
@@ -222,13 +223,33 @@ export function AiStreamSection() {
               'animate-indus-logo-glow bg-indus-halo motion-reduce:animate-none',
             )}
           />
-          <Image
-            src="/assets/img/industries/indus-logo.png"
-            alt=""
-            width={300}
-            height={300}
-            className="mx-auto h-auto w-[300px] animate-indus-logo-illum motion-reduce:animate-none max-bs-md:w-[180px]"
-          />
+          {/*
+            The badge: the logo on an indigo tile inside two faint rounded frames,
+            over a soft blue bloom. Drawn in CSS around the untouched logo file,
+            at the footprint the badge has always occupied (300×253, 180×152 on
+            phones) so the traces still meet it. The pulsing glow is applied to
+            the frame, never to the logo itself.
+          */}
+          <div
+            className={cn(
+              'mx-auto flex h-[253px] w-[300px] items-center justify-center',
+              'max-bs-md:h-[152px] max-bs-md:w-[180px]',
+              'bg-[radial-gradient(circle_closest-side,rgba(23,133,209,0.2)_0%,rgba(23,133,209,0.18)_41%,rgba(23,133,209,0)_91%)]',
+            )}
+          >
+            <div
+              className={cn(
+                'relative flex size-[104px] items-center justify-center rounded-[23%] max-bs-md:size-[63px]',
+                'border border-[rgba(40,66,245,0.5)] bg-[rgba(6,34,62,0.53)]',
+                'animate-indus-logo-illum motion-reduce:animate-none',
+              )}
+            >
+              <span className="absolute inset-[13%] rounded-[25%] border border-[rgba(26,44,169,0.72)]" />
+              <span className="relative flex size-1/2 items-center justify-center rounded-[27%] bg-[linear-gradient(135deg,#0d0d33_0%,#1b1a67_50%,#2a29a3_100%)]">
+                <BrandMark className="h-auto w-[70%]" />
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

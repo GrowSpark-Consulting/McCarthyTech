@@ -1,4 +1,5 @@
 import { CapabilityCard } from '@/components/sections/services-page/capability-card';
+import { ServicesHeroVisual } from '@/components/sections/services-page/services-hero-visual';
 import { AgencyButton } from '@/components/ui/agency-button';
 import { BreadcrumbTrail } from '@/components/ui/breadcrumb-trail';
 import { Container } from '@/components/ui/container';
@@ -39,38 +40,110 @@ export function ServicesHub() {
       <section
         aria-labelledby="services-hero-heading"
         className={cn(
-          'relative overflow-hidden',
+          'relative isolate overflow-hidden',
           'pt-svc-hero-top max-bs-lg:pt-svc-hero-top-lg max-bs-md:pt-svc-hero-top-md',
         )}
       >
-        <Container>
-          <BreadcrumbTrail items={servicesPageContent.breadcrumb} />
-
-          <p className={cn(EYEBROW_CLASS, 'mt-8')}>{servicesPageContent.eyebrow}</p>
-
-          <h1
-            id="services-hero-heading"
+        {/*
+         * Backdrop: a faint grid and two soft blooms, faded out towards the
+         * bottom so the hero hands over to the plain canvas of the next band
+         * without a visible edge.
+         */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,#000_60%,transparent)]"
+        >
+          <div className="absolute inset-0 bg-svc-grid [mask-image:radial-gradient(ellipse_70%_60%_at_60%_40%,#000_15%,transparent_75%)]" />
+          <div
             className={cn(
-              'mt-5 font-heading font-bold leading-[1.02] tracking-[-0.03em] text-white',
-              'text-[clamp(44px,6.6vw,96px)]',
+              'absolute -left-[15%] -top-[30%] size-[min(960px,120vw)] rounded-full',
+              'bg-[radial-gradient(circle,rgba(0,255,151,0.13)_0%,rgba(0,255,151,0)_62%)]',
+              'animate-svc-bloom motion-reduce:animate-none',
+            )}
+          />
+        </div>
+
+        <Container>
+          <div
+            className={cn(
+              'grid grid-cols-1 items-center gap-10',
+              'bs-lg:grid-cols-[minmax(0,1fr)_clamp(280px,30%,420px)]',
             )}
           >
-            {servicesPageContent.titleLines[0]}{' '}
-            <span className="text-mint">{servicesPageContent.titleLines[1]}</span>
-          </h1>
+            {/*
+             * Copy column. It is a size container so the headline can be set in
+             * `cqi` against the column's own width: "Engineering" is ~7.3em wide
+             * in the display face, so 13cqi keeps it inside the column at every
+             * breakpoint without a ladder of per-breakpoint sizes.
+             */}
+            <div className="[container-type:inline-size]">
+              <BreadcrumbTrail
+                items={servicesPageContent.breadcrumb}
+                className="animate-fade-in-up"
+              />
 
-          <p className="mt-6 max-w-[720px] text-lg leading-[1.7] text-svc-muted">
-            {servicesPageContent.lead}
-          </p>
+              <p
+                className={cn(
+                  'mt-8 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[3px] text-mint',
+                  "before:h-px before:w-8 before:bg-mint before:content-['']",
+                  'animate-fade-in-up [animation-delay:80ms]',
+                )}
+              >
+                {servicesPageContent.eyebrow}
+              </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <AgencyButton
-              href={servicesPageContent.primaryCta.href}
-              label={servicesPageContent.primaryCta.label}
-            />
-            <GhostButton
-              href={servicesPageContent.secondaryCta.href}
-              label={servicesPageContent.secondaryCta.label}
+              {/*
+               * `leading-*` must come after the `text-*` size here: `cn` runs
+               * tailwind-merge, which drops a line-height that precedes a
+               * font-size, and the heading then inherits the body's 28px.
+               */}
+              <h1
+                id="services-hero-heading"
+                className={cn(
+                  'mt-5 font-heading font-bold tracking-[-0.035em] text-white',
+                  'text-[clamp(38px,13cqi,128px)] leading-[1.04]',
+                  'animate-fade-in-up [animation-delay:160ms]',
+                )}
+              >
+                <span className="block">{servicesPageContent.title.firstLine}</span>{' '}
+                <span className="block">
+                  {servicesPageContent.title.secondLine}{' '}
+                  <span className="text-mint">{servicesPageContent.title.accent}</span>
+                </span>
+              </h1>
+
+              <p
+                className={cn(
+                  'mt-7 max-w-[580px] text-[17px] leading-[1.7] text-svc-muted bs-xl:text-lg',
+                  'animate-fade-in-up [animation-delay:240ms]',
+                )}
+              >
+                {servicesPageContent.lead}
+              </p>
+
+              <div
+                className={cn(
+                  'mt-10 flex flex-wrap items-center gap-4 max-bs-md:mt-8',
+                  'animate-fade-in-up [animation-delay:320ms]',
+                )}
+              >
+                <AgencyButton
+                  href={servicesPageContent.primaryCta.href}
+                  label={servicesPageContent.primaryCta.label}
+                />
+                <GhostButton
+                  href={servicesPageContent.secondaryCta.href}
+                  label={servicesPageContent.secondaryCta.label}
+                />
+              </div>
+            </div>
+
+            {/* Decorative, so it gives way below `bs-lg` rather than crowd the copy. */}
+            <ServicesHeroVisual
+              className={cn(
+                'hidden bs-lg:block',
+                'delay-300 duration-1000 ease-out animate-in fade-in-0 zoom-in-95 fill-mode-both',
+              )}
             />
           </div>
 
@@ -79,7 +152,7 @@ export function ServicesHub() {
             role="img"
             aria-label="Disciplines we cover"
             className={cn(
-              'mt-16 overflow-hidden',
+              'mt-16 overflow-hidden bs-lg:mt-20',
               '[mask-image:linear-gradient(to_right,transparent,#000_6%,#000_94%,transparent)]',
             )}
           >
