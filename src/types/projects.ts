@@ -45,10 +45,10 @@ export interface Project {
   /** Screenshot or cover under `public/`, shown at 16:9 with `object-fit: cover`. */
   readonly image: string;
   /**
-   * Set to `'light'` when the screenshot is mostly light. The card's glass is
-   * nearly clear and blurs whatever is behind it, so over a white page its white
-   * text would vanish; `'light'` gives it a dark tint instead. Defaults to
-   * `'dark'`, the reference's look.
+   * Set to `'light'` when the screenshot is light, or has bright areas where the
+   * card sits over it. The card's glass is nearly clear and blurs whatever is
+   * behind it, so over a bright patch its white text would vanish; `'light'`
+   * gives it a dark tint instead. Defaults to `'dark'`, the reference's look.
    */
   readonly imageTone?: 'dark' | 'light';
   /** Shown as the "Stack" fact, comma-separated. */
@@ -57,7 +57,10 @@ export interface Project {
   readonly year?: string;
   /** Shown as the "Client" fact. */
   readonly client?: string;
-  /** Where the card's button goes. External URLs open in a new tab. */
+  /**
+   * Where the card's button goes; external URLs open in a new tab. Leave it out
+   * and the card shows no button.
+   */
   readonly liveUrl?: string;
   /** Adds a "Source" fact linking to the repository. */
   readonly githubUrl?: string;
