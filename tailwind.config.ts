@@ -421,6 +421,23 @@ const config: Config = {
         /** `.xb-project-item` desktop sheen. */
         'project-sheen':
           'linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)',
+        /**
+         * `.xb-project-wrap_2 .xb-item--inner` — the Projects page's card fill.
+         *
+         * A 6% white sheen, lighter than the homepage caption's `project-caption`:
+         * on this page the card sits over a screenshot rather than a video, and
+         * the darker fill would read as a hole in the image.
+         */
+        'project-glass':
+          'linear-gradient(209deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.06) 100%)',
+        /**
+         * The same card over a light screenshot. The 6% sheen blurs a white page
+         * into a white card; an 80% ink tint keeps its white copy above 7:1.
+         */
+        'project-glass-dim':
+          'linear-gradient(209deg, rgba(0, 2, 15, 0.8) 0%, rgba(0, 2, 15, 0.8) 100%)',
+        /** `.breadcrumb.bg_img` — the curtain backdrop behind interior page titles. */
+        'breadcrumb-stage': "url('/assets/img/bg/bootcamp-bg.png')",
         /** `.xb-served-card` fill. */
         'served-card':
           'linear-gradient(180deg, rgba(20, 27, 43, 0.92) 0%, rgba(11, 16, 28, 0.86) 100%)',
