@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
 import { AboutSection } from '@/components/sections/about/about-section';
-import { BrandMarqueeSection } from '@/components/sections/brands/brand-marquee-section';
 import { ContactSection } from '@/components/sections/contact/contact-section';
 import { FeaturesSection } from '@/components/sections/features/features-section';
 import { HeroSection } from '@/components/sections/hero/hero-section';
@@ -29,9 +28,9 @@ export const metadata: Metadata = {
 /**
  * Home page.
  *
- * Sections mount in document order, matching the reference's layout: hero,
- * about, services, features, client logos, projects, AI stream, industries
- * served. The hero's scroll cue targets `#about`, which `AboutSection` owns.
+ * Sections mount in document order: hero, about, services, features, an empty
+ * band, projects, AI stream, industries served. The hero's scroll cue targets
+ * `#about`, which `AboutSection` owns.
  */
 export default function HomePage() {
   return (
@@ -40,7 +39,13 @@ export default function HomePage() {
       <AboutSection />
       <ServicesSection />
       <FeaturesSection />
-      <BrandMarqueeSection />
+      {/*
+       * Deliberately empty. The client-logo strip that stood here was removed,
+       * and this keeps the footprint it occupied — its 170px/150px padding
+       * around a 225px card, or 80px/80px around a 220px card below `bs-md` —
+       * so the sections beneath stay where they were.
+       */}
+      <div aria-hidden="true" className="h-[545px] max-bs-md:h-[380px]" />
       <ProjectsSection />
       <AiStreamSection />
       <IndustriesServedSection />

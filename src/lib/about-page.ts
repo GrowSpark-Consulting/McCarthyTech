@@ -12,8 +12,7 @@ export const aboutPageContent = {
     {
       id: 'global-reach',
       title: 'Global Reach',
-      description:
-        'Delivering excellence across borders with a local touch, rooted in Singapore.',
+      description: 'Delivering excellence across borders with a local touch, rooted in Singapore.',
       icon: '/assets/img/icon/feature-icon01.svg',
     },
     {
@@ -69,10 +68,13 @@ export const aboutPageContent = {
 
   transform: {
     subtitle: 'Ready to Transform?',
-    title: 'Initiate your strategic digital transformation',
+    /** "Initiate your strategic digital transformation", set on three fixed lines. */
+    titleLines: ['Initiate your', 'strategic digital', 'transformation'],
     content:
       'We are a team of innovators dedicated to delivering cutting-edge solutions that help businesses achieve remarkable growth and success. Partner with McCarthy Tech today.',
     button: { label: 'Begin Today with us', href: '/contact' } satisfies NavLink,
+    /** Announced once for the whole moving badge field. */
+    awardsLabel: 'G2 award badges',
     awards: [
       '/assets/img/award/img01.png',
       '/assets/img/award/img02.png',

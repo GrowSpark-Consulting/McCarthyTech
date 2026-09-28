@@ -189,12 +189,24 @@ export function SiteFooter() {
           })}
         </ul>
 
-        <div className="flex flex-wrap items-center">
-          <div
+        {/*
+         * Contact strip. The address is a full street line, so it is set in the
+         * body face at reading size and given the widest column — in the display
+         * face at 24px it wrapped to three lines. Below `bs-lg` the three cells
+         * stack and centre, since a 3-up row there leaves each too narrow; the
+         * address stays left-aligned beside its pin when it wraps on phones.
+         */}
+        <div
+          className={cn(
+            'grid grid-cols-1',
+            // Phone hugs its number; address and copyright share the rest.
+            'bs-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]',
+          )}
+        >
+          <address
             className={cn(
-              'relative flex min-h-[91px] w-1/4 items-center gap-2 border-r border-rule px-4',
-              'max-bs-md:w-full max-bs-md:border-b max-bs-md:border-r-0',
-              'bs-sm:max-bs-md:justify-center',
+              'flex items-center justify-center gap-3 border-b border-rule px-5 py-6 not-italic',
+              'bs-lg:min-h-[91px] bs-lg:justify-start bs-lg:border-b-0 bs-lg:border-r bs-lg:py-0 bs-xl:px-6',
             )}
           >
             <Image
@@ -203,22 +215,25 @@ export function SiteFooter() {
               width={20}
               height={20}
               aria-hidden="true"
-              className="-translate-y-1"
+              className="shrink-0"
             />
-            <span className="font-heading text-2xl capitalize tracking-body text-white">
+            <span className="font-body text-base font-medium tracking-body text-white bs-xl:text-lg">
               {footerContent.location}
             </span>
-          </div>
+          </address>
 
           <div
             className={cn(
-              'relative flex min-h-[91px] w-1/2 items-center justify-center gap-2 border-r border-rule px-4',
-              'max-bs-md:w-full max-bs-md:border-b max-bs-md:border-r-0',
+              'flex items-center justify-center border-b border-rule px-5 py-6',
+              'bs-lg:min-h-[91px] bs-lg:border-b-0 bs-lg:border-r bs-lg:py-0',
             )}
           >
-            <p className="font-medium">
+            <p className="text-center text-sm font-medium text-muted bs-xl:text-base">
               Copyright © {footerContent.copyrightYear}{' '}
-              <AppLink href="/" className="text-white hover:text-lime">
+              <AppLink
+                href="/"
+                className="font-semibold text-white transition-colors duration-300 ease-out hover:text-lime"
+              >
                 {siteConfig.legalName}
               </AppLink>
               , All rights reserved.
@@ -227,8 +242,8 @@ export function SiteFooter() {
 
           <div
             className={cn(
-              'relative flex min-h-[91px] w-1/4 items-center gap-2 px-4',
-              'max-bs-md:w-full bs-sm:max-bs-md:justify-center',
+              'flex items-center justify-center gap-3 px-5 py-6',
+              'bs-lg:min-h-[91px] bs-lg:py-0 bs-xl:px-8',
             )}
           >
             <Image
@@ -237,12 +252,12 @@ export function SiteFooter() {
               width={20}
               height={20}
               aria-hidden="true"
-              className="-translate-y-1"
+              className="shrink-0"
             />
             <a
               href={`tel:${footerContent.phoneHref}`}
               className={cn(
-                'font-heading text-2xl capitalize tracking-body text-white',
+                'whitespace-nowrap font-heading text-xl tracking-body text-white bs-xl:text-2xl',
                 'transition-colors duration-300 ease-out hover:text-lime',
                 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime',
               )}

@@ -36,7 +36,7 @@ export function ContactCard() {
         {/* Info detail holder */}
         <div className="max-bs-xs:p-6 p-8 text-left">
           <p className="mb-2 font-heading text-lg font-bold tracking-wide text-white">
-            {address.locality}, {address.region}, {address.country}
+            {address.street}, {address.locality} {address.postalCode}
           </p>
           <a
             href={`tel:${phone}`}

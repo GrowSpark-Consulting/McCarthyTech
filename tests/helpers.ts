@@ -37,7 +37,6 @@ export const SECTION_HEADINGS = {
   about: 'about-heading',
   services: 'services-heading',
   features: 'features-heading',
-  brands: 'brands-heading',
   projects: 'projects-heading',
   aiStream: 'ai-stream-heading',
   industriesServed: 'industries-served-heading',

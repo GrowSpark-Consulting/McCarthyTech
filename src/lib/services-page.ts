@@ -22,8 +22,8 @@ export interface ServiceCapability {
 
 export const servicesPageContent = {
   eyebrow: 'What we build',
-  /** Rendered as two lines, the second in the accent colour. */
-  titleLines: ['Engineering the', 'Future'] as const,
+  /** Set as "Engineering / the Future", with the last word in the accent colour. */
+  title: { firstLine: 'Engineering', secondLine: 'the', accent: 'Future' },
   lead: 'Premium IT solutions from Singapore to the rest of the world — we turn complex ideas into scalable digital realities.',
   primaryCta: { label: 'Start your project', href: '/contact' } satisfies NavLink,
   secondaryCta: { label: 'Explore services', href: '#capabilities' } satisfies NavLink,

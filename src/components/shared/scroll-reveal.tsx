@@ -36,6 +36,17 @@ const REVEAL_VARIANTS = {
     hidden: { opacity: 0, scale: 0.3 },
     visible: { opacity: 1, scale: 1 },
   },
+  /**
+   * A short, fixed 28px rise.
+   *
+   * For large display type, where `fadeInUp`'s travel of 100% of the element's
+   * own height would carry a three-line heading most of a screen — a slide
+   * rather than a reveal.
+   */
+  rise: {
+    hidden: { opacity: 0, y: 28 },
+    visible: { opacity: 1, y: 0 },
+  },
 } as const satisfies Record<string, Variants>;
 
 /** Available entrance animations. */
