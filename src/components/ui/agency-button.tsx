@@ -32,6 +32,8 @@ const SIZE_TOKENS = {
   default: {
     /** `.agency-btn .text { padding: 21.2px 20px }` */
     label: 'px-5 py-[21.2px]',
+    /** `.thm-btn .arrow { padding: 7px }` */
+    arrow: 'p-[7px]',
     /** `.thm-btn .arrow-icon { height: 46px; width: 46px }` */
     icon: 'size-[46px]',
     /** `.thm-btn .arrow-icon svg { left: 9px; top: 10px }` */
@@ -41,10 +43,23 @@ const SIZE_TOKENS = {
   compact: {
     /** `.megamenu-btn .text { padding: 16.2px 20px }` */
     label: 'px-5 py-[16.2px]',
+    arrow: 'p-[7px]',
     /** `.megamenu-btn .arrow-icon { height: 36px; width: 36px }` */
     icon: 'size-9',
     /** `.megamenu-btn .arrow-icon svg { top: 6px; left: 5px }` */
     glyph: 'left-[5px] top-[6px]',
+    glyphSize: 25,
+  },
+  /** `.xb-project-content .xb-item--btn a` — the Projects page cards. */
+  project: {
+    /** `.xb-item--btn a .text { padding: 16.2px 20px }` */
+    label: 'px-5 py-[16.2px]',
+    /** `.xb-item--btn a .arrow { padding: 5px }` */
+    arrow: 'p-[5px]',
+    /** `.xb-item--btn a .arrow .arrow-icon { height: 40px; width: 40px }` */
+    icon: 'size-10',
+    /** `.xb-item--btn a .arrow .arrow-icon svg { top: 8px; left: 7px }` */
+    glyph: 'left-[7px] top-[8px]',
     glyphSize: 25,
   },
 } as const;
@@ -77,6 +92,8 @@ export interface AgencyButtonProps {
   readonly srSuffix?: string;
   /** Fired on activation — used by overlays to dismiss themselves on navigate. */
   readonly onClick?: () => void;
+  /** Opens the destination in a new tab — for links that leave the site. */
+  readonly newTab?: boolean;
 }
 
 /**
@@ -100,6 +117,7 @@ export function AgencyButton({
   ariaLabel,
   srSuffix,
   onClick,
+  newTab = false,
 }: AgencyButtonProps) {
   const tokens = SIZE_TOKENS[size];
 
@@ -108,6 +126,8 @@ export function AgencyButton({
       href={href}
       aria-label={ariaLabel}
       onClick={onClick}
+      target={newTab ? '_blank' : undefined}
+      rel={newTab ? 'noopener noreferrer' : undefined}
       className={cn(BASE_CLASS, className)}
     >
       <span
@@ -123,8 +143,9 @@ export function AgencyButton({
 
       <span
         className={cn(
-          'flex items-center justify-center rounded-l-none rounded-r-cta bg-lime p-[7px]',
+          'flex items-center justify-center rounded-l-none rounded-r-cta bg-lime',
           'transition-all duration-300 ease-out group-hover:rounded-cta',
+          tokens.arrow,
         )}
       >
         <span

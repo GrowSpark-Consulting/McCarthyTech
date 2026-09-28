@@ -19,6 +19,7 @@ import { serviceSubDetails } from '@/lib/service-sub-details';
 export const SHIPPED_ROUTES: readonly string[] = [
   '/',
   '/services',
+  '/projects',
   // Derived rather than retyped: the detail pages are defined once in
   // `lib/service-details.ts`, and a service added there turns on prefetching
   // here and appears in the sitemap without a second edit.
