@@ -51,21 +51,37 @@ export const siteConfig = {
 } as const;
 
 /**
- * The official McCarthy Tech logo — the lime mark on a transparent canvas.
+ * The full McCarthy Digital logo — the lime mark beside the white wordmark, on
+ * a transparent canvas.
  *
- * The one source for every place the brand mark appears: the header, the mobile
- * drawer, the preloader, the favicon, the Organization structured data, and the
- * two framed ornaments (the homepage AI-stream badge and the AI Implementation
- * feature card). The file is served exactly as supplied — only the box it is
- * drawn into changes per placement, always with `object-contain` so the mark
- * keeps its proportions.
+ * Used wherever the logo is shown at a readable size: the header, the mobile
+ * drawer, and the preloader. The wordmark is white, so it is only ever drawn on
+ * the site's dark surfaces. The file is served exactly as supplied — only the
+ * box it is drawn into changes per placement, always with `object-contain` so
+ * the lockup keeps its proportions.
  *
  * `width`/`height` are the file's intrinsic pixels, so `next/image` can reserve
  * the right aspect ratio before it decodes.
  */
 export const brandLogo = {
+  src: '/assets/img/logo/mccarthy-digital-logo.png',
+  alt: 'McCarthy Digital',
+  width: 469,
+  height: 122,
+} as const;
+
+/**
+ * The lime mark on its own, without the wordmark — the same glyph as in
+ * {@link brandLogo}.
+ *
+ * Used where the full lockup would be unreadable or invisible: the favicon, the
+ * Organization structured data (search engines show it on white, where the
+ * white wordmark would vanish), and the two framed ornaments (the homepage
+ * AI-stream badge and the AI Implementation feature card).
+ */
+export const brandMark = {
   src: '/assets/img/logo/mccarthy-tech-logo.png',
-  alt: 'McCarthy Tech',
+  alt: 'McCarthy Digital',
   width: 846,
   height: 655,
 } as const;

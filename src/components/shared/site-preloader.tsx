@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { BrandMark } from '@/components/layout/brand-logo';
+import { BrandLockup } from '@/components/layout/brand-logo';
 import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 import { siteConfig } from '@/lib/site';
 
@@ -78,9 +78,9 @@ export function SitePreloader() {
           {/* Fetched eagerly but deliberately *not* `priority`: a preload here
               would land in the document head ahead of the hero poster and
               compete with the Largest Contentful Paint element for early
-              bandwidth. The mark is a few kilobytes and paints well within the
+              bandwidth. The logo is a few kilobytes and paints well within the
               curtain's lifetime either way. */}
-          <BrandMark loading="eager" className="h-[72px] w-auto" />
+          <BrandLockup loading="eager" className="h-16 w-auto" />
 
           {/* Indeterminate progress rail: a lime sliver sweeping a dim track. */}
           <span className="relative block h-px w-[140px] overflow-hidden bg-white/15">

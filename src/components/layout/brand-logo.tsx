@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { AppLink } from '@/components/ui/app-link';
 
-import { brandLogo, siteConfig } from '@/lib/site';
+import { brandLogo, brandMark, siteConfig } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
 export interface BrandMarkProps {
   /**
-   * Sizes the box the mark is drawn into. Set one dimension and `auto` on the
+   * Sizes the box the image is drawn into. Set one dimension and `auto` on the
    * other; the file's aspect ratio supplies the rest.
    */
   readonly className?: string;
@@ -17,29 +17,50 @@ export interface BrandMarkProps {
 }
 
 /**
- * The McCarthy Tech logo image, unframed and unlinked.
+ * Draws one of the two brand files, unframed and unlinked.
  *
- * Every placement draws the mark through this component, so there is exactly
- * one implementation of it. Only the box is ever sized — `object-contain` means
- * a box of any shape can neither stretch nor crop the mark.
+ * Only the box is ever sized — `object-contain` means a box of any shape can
+ * neither stretch nor crop the artwork.
  *
  * The alt text is empty: each placement is either inside a link that already
  * names the company, or purely decorative.
- *
- * @param props - See {@link BrandMarkProps}.
  */
-export function BrandMark({ className, priority = false, loading }: BrandMarkProps) {
+function BrandImage({
+  asset,
+  className,
+  priority = false,
+  loading,
+}: BrandMarkProps & { readonly asset: typeof brandLogo | typeof brandMark }) {
   return (
     <Image
-      src={brandLogo.src}
+      src={asset.src}
       alt=""
-      width={brandLogo.width}
-      height={brandLogo.height}
+      width={asset.width}
+      height={asset.height}
       priority={priority}
       loading={loading}
       className={cn('object-contain', className)}
     />
   );
+}
+
+/**
+ * The full McCarthy Digital logo — mark and wordmark — unframed and unlinked.
+ *
+ * @param props - See {@link BrandMarkProps}.
+ */
+export function BrandLockup(props: BrandMarkProps) {
+  return <BrandImage asset={brandLogo} {...props} />;
+}
+
+/**
+ * The lime mark alone, for placements too small or too square for the
+ * wordmark to read — the framed ornaments.
+ *
+ * @param props - See {@link BrandMarkProps}.
+ */
+export function BrandMark(props: BrandMarkProps) {
+  return <BrandImage asset={brandMark} {...props} />;
 }
 
 export interface BrandLogoProps {
@@ -57,7 +78,7 @@ export interface BrandLogoProps {
 }
 
 /**
- * The McCarthy Tech logo, wrapped in a home link.
+ * The full logo, wrapped in a home link.
  *
  * The link's accessible name is the company name plus destination rather than
  * the bare alt text, so a screen-reader user hears where it goes. The image
@@ -77,7 +98,7 @@ export function BrandLogo({ placement = 'header', priority = false, className }:
         className,
       )}
     >
-      <BrandMark
+      <BrandLockup
         priority={priority}
         className={cn('w-auto', placement === 'header' ? 'h-11 max-bs-lg:h-9' : 'h-10')}
       />

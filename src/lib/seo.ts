@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { brandLogo, siteConfig } from '@/lib/site';
+import { brandMark, siteConfig } from '@/lib/site';
 import type { NavLink } from '@/types/navigation';
 import type { ServiceDetail } from '@/types/service-detail';
 import type { ServiceFaq } from '@/types/service-sections';
@@ -27,10 +27,11 @@ export const rootMetadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  // The favicon is the logo file itself rather than a separate copy under
-  // `app/`, so the tab icon cannot fall out of step with the logo.
+  // The favicon is the mark file itself rather than a separate copy under
+  // `app/`, so the tab icon cannot fall out of step with the logo. The full
+  // lockup is too wide to read at tab size.
   icons: {
-    icon: { url: brandLogo.src, type: 'image/png' },
+    icon: { url: brandMark.src, type: 'image/png' },
   },
   openGraph: {
     type: 'website',
@@ -91,7 +92,7 @@ export function buildOrganizationJsonLd(): string {
     legalName,
     url,
     description,
-    logo: `${url}${brandLogo.src}`,
+    logo: `${url}${brandMark.src}`,
     email: contact.email,
     telephone: contact.phone,
     address: {
