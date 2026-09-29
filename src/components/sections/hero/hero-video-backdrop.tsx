@@ -8,17 +8,13 @@ import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 import { heroBackgroundVideo } from '@/lib/hero';
 
 /**
- * The clip is desktop-only.
+ * Below this width the hero plays the phone cut of the clip.
  *
- * Lighthouse's mobile run attributed Largest Contentful Paint to this `<video>`
- * with a **7.4 second load delay** — the element only exists after an idle
- * callback, and on a throttled connection that lands very late. Beyond the
- * metric, pushing 20 MB of decorative video to a phone on cellular is the wrong
- * default whatever the score says.
- *
- * Below this width the poster is the whole backdrop: it still fills the hero,
- * still carries the scrim, and becomes the LCP element itself — which is exactly
- * what it was preloaded for.
+ * The clip was once desktop-only, when it weighed 20 MB. It is now a 5 MB
+ * landscape encode for desktop and a 2 MB portrait crop for phones — a crop
+ * rather than a downscale, because `object-cover` on a tall phone hero would
+ * otherwise throw away two thirds of every landscape frame it downloaded. The
+ * poster still paints first either way and remains the LCP element.
  */
 const DESKTOP_QUERY = '(min-width: 1024px)';
 
@@ -46,7 +42,10 @@ export function HeroVideoBackdrop() {
   const isIdle = useIdleReady();
   const isDesktop = useMediaQuery(DESKTOP_QUERY);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const shouldPlayVideo = isIdle && isDesktop && !prefersReducedMotion;
+  const shouldPlayVideo = isIdle && !prefersReducedMotion;
+  const videoSrc = isDesktop
+    ? heroBackgroundVideo.src
+    : (heroBackgroundVideo.mobileSrc ?? heroBackgroundVideo.src);
 
   return (
     <>
@@ -63,6 +62,9 @@ export function HeroVideoBackdrop() {
 
       {shouldPlayVideo ? (
         <video
+          // Keyed on the source: a `<source>` swap alone does not reload a
+          // playing video, so crossing the breakpoint remounts it instead.
+          key={videoSrc}
           autoPlay
           muted
           loop
@@ -73,7 +75,7 @@ export function HeroVideoBackdrop() {
           poster={heroBackgroundVideo.poster.src}
           className="pointer-events-none absolute inset-0 -z-20 size-full object-cover"
         >
-          <source src={heroBackgroundVideo.src} type={heroBackgroundVideo.type} />
+          <source src={videoSrc} type={heroBackgroundVideo.type} />
         </video>
       ) : null}
 
