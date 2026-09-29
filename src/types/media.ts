@@ -20,6 +20,8 @@ export interface ImageAsset {
  */
 export interface BackgroundVideoAsset {
   readonly src: string;
+  /** A lighter portrait cut for phones. Without one, phones play `src`. */
+  readonly mobileSrc?: string;
   readonly type: `video/${string}`;
   readonly poster: ImageAsset;
 }

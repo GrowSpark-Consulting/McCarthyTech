@@ -31,7 +31,9 @@ export const heroContent = {
  * it — see `HeroVideoBackdrop` for the deferred-mount strategy.
  */
 export const heroBackgroundVideo: BackgroundVideoAsset = {
-  src: '/assets/img/video/development.mp4',
+  src: '/assets/img/video/heromain.mp4',
+  /** A 406×720 centre crop of the same clip, about 2 MB. */
+  mobileSrc: '/assets/img/video/heromain-mobile.mp4',
   type: 'video/mp4',
   poster: {
     src: '/assets/img/bg/hero_bg.png',
