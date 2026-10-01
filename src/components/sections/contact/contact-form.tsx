@@ -1,20 +1,23 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, type FieldPath } from 'react-hook-form';
 
-import { submitEnquiry, type EnquiryResult } from '@/app/actions/submit-enquiry';
 import { ArrowGlyph } from '@/components/ui/arrow-glyph';
+import { contactContent } from '@/lib/contact';
 import {
-  ACCEPTED_ATTACHMENT_TYPES,
-  CONTACT_SERVICES,
-  MAX_ATTACHMENT_BYTES,
-  contactContent,
-  contactEnquirySchema,
-  type ContactEnquiry,
-} from '@/lib/contact';
+  INQUIRY_BUDGETS,
+  INQUIRY_LIMITS,
+  INQUIRY_SERVICES,
+  INQUIRY_SOURCES,
+  INQUIRY_TIMELINES,
+  contactInquiryContent,
+  contactInquirySchema,
+  type ContactInquiry,
+} from '@/lib/contact-inquiry';
+import { submitContactForm } from '@/lib/contact-service';
 import { cn } from '@/lib/utils';
 
 /** Shared shell styling for every control — `.xb-input-field input`. */
@@ -23,6 +26,15 @@ const CONTROL_CLASS = cn(
   'py-[10px] pl-12 pr-5 text-[15px] font-normal tracking-[-0.02em] text-white',
   'outline-none transition-all duration-300 ease-out',
   'focus:border-lime',
+);
+
+/** Selects: the same shell, with the prompt shown as the first option. There
+ *  is no arrow, so the right padding is slim: "Mobile App Development" must fit
+ *  the half-width box at 1200–1399px. */
+const SELECT_CLASS = cn(
+  CONTROL_CLASS,
+  'cursor-pointer appearance-none py-[10px] pl-12 pr-2',
+  'leading-[38px] text-white',
 );
 
 /** Floating placeholder — `.xb-input-field label`. */
@@ -39,9 +51,104 @@ const LABEL_CLASS = cn(
   'peer-[:not(:placeholder-shown)]:translate-x-[15px] peer-[:not(:placeholder-shown)]:opacity-0',
 );
 
-/** Leading glyph — `.xb-input-field img`. The source art is black, so it is
- *  inverted to white with a brightness filter, as in the reference. */
+/** Leading glyph — `.xb-input-field img`. The source art is grey, so it is
+ *  turned white with a brightness filter, as in the reference. */
 const ICON_CLASS = 'pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 brightness-[100]';
+
+const ICON_DIR = '/assets/img/icon';
+
+/** The text inputs, in grid order. */
+const TEXT_FIELDS = [
+  {
+    name: 'fullName',
+    label: 'Full Name*',
+    type: 'text',
+    autoComplete: 'name',
+    maxLength: INQUIRY_LIMITS.name,
+    icon: `${ICON_DIR}/user-balck-icon.svg`,
+  },
+  {
+    name: 'email',
+    label: 'Work Email*',
+    type: 'email',
+    autoComplete: 'email',
+    maxLength: INQUIRY_LIMITS.email,
+    icon: `${ICON_DIR}/sms-balck-icon.svg`,
+  },
+  {
+    name: 'phone',
+    label: 'Phone Number*',
+    type: 'tel',
+    autoComplete: 'tel',
+    maxLength: INQUIRY_LIMITS.phone,
+    icon: `${ICON_DIR}/call-icon02.svg`,
+  },
+  {
+    name: 'company',
+    label: 'Company Name*',
+    type: 'text',
+    autoComplete: 'organization',
+    maxLength: INQUIRY_LIMITS.company,
+    icon: `${ICON_DIR}/building-icon.svg`,
+  },
+] as const;
+
+/**
+ * The dropdowns, in grid order. A required one's prompt is a disabled option;
+ * the optional one's prompt can be chosen again to clear it. A prompt is not
+ * an accessible name, so each also has a visually hidden label.
+ */
+const SELECT_FIELDS = [
+  {
+    name: 'service',
+    label: 'Service required',
+    prompt: 'Service Required*',
+    options: INQUIRY_SERVICES,
+    required: true,
+    icon: `${ICON_DIR}/list-icon.svg`,
+  },
+  {
+    name: 'budget',
+    label: 'Project budget',
+    prompt: 'Project Budget*',
+    options: INQUIRY_BUDGETS,
+    required: true,
+    icon: `${ICON_DIR}/wallet-icon.svg`,
+  },
+  {
+    name: 'timeline',
+    label: 'Project timeline',
+    prompt: 'Project Timeline*',
+    options: INQUIRY_TIMELINES,
+    required: true,
+    icon: `${ICON_DIR}/calendar-icon.svg`,
+  },
+  {
+    name: 'howHeard',
+    label: 'How did you find us? (optional)',
+    // Shorter than the Contact page's "How did you hear about us?", which is
+    // clipped in the half-width box at 1200–1399px.
+    prompt: 'How Did You Find Us?',
+    options: INQUIRY_SOURCES,
+    required: false,
+    icon: `${ICON_DIR}/global-icon.svg`,
+  },
+] as const;
+
+const EMPTY: ContactInquiry = {
+  fullName: '',
+  email: '',
+  phone: '',
+  company: '',
+  service: '' as ContactInquiry['service'],
+  budget: '' as ContactInquiry['budget'],
+  timeline: '' as ContactInquiry['timeline'],
+  message: '',
+  howHeard: '',
+};
+
+/** What the visitor is told after a send. */
+type Result = { readonly status: 'success' | 'error'; readonly message: string };
 
 /** Field-level error text. */
 function FieldError({ id, message }: { readonly id: string; readonly message?: string }) {
@@ -53,274 +160,194 @@ function FieldError({ id, message }: { readonly id: string; readonly message?: s
   );
 }
 
+/** A control's leading glyph. */
+function FieldIcon({ src, className }: { readonly src: string; readonly className?: string }) {
+  return (
+    <Image
+      src={src}
+      alt=""
+      width={20}
+      height={20}
+      aria-hidden="true"
+      className={cn(ICON_CLASS, className)}
+    />
+  );
+}
+
 /**
- * The enquiry form.
+ * The homepage enquiry form.
  *
- * Validation is declared once in `contactEnquirySchema` and enforced twice: React
- * Hook Form runs it in the browser for immediate feedback, and the Server Action
- * re-parses it before doing anything with the data. The browser pass is a
- * convenience, never a security boundary.
+ * It asks for the same details as the Contact page form and sends them the
+ * same way: validated in the browser against `contactInquirySchema`, then
+ * through `submitContactForm` to the Google Apps Script endpoint, which
+ * validates again, stores the inquiry in Google Sheets and emails the team.
+ * Field errors the endpoint reports are shown on the same fields.
  *
- * Native `required` and `placeholder=" "` are kept on each control so the
- * floating-label animation is driven by CSS state rather than by re-rendering on
- * every keystroke.
+ * Spam defences on this side are a honeypot input people never see and the
+ * time the form was opened; the endpoint enforces both, plus rate limits and
+ * duplicate suppression. A ref guards against a second submit before React
+ * has disabled the button. A failed send keeps everything the visitor typed.
  *
- * **Attachments.** The file input accepts and validates a document, but only its
- * *name* is transmitted — there is no storage bucket configured, and silently
- * dropping a file the visitor believes they attached would be worse than saying
- * so. Wire up storage and the payload can carry the file itself.
+ * Native `placeholder=" "` is kept on each text control so the floating-label
+ * animation is driven by CSS state rather than by re-rendering on every
+ * keystroke.
  */
 export function ContactForm() {
   const formId = useId();
-  const [result, setResult] = useState<EnquiryResult | null>(null);
-  const [attachmentName, setAttachmentName] = useState<string | null>(null);
-  const [attachmentError, setAttachmentError] = useState<string | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
+  const startedAtRef = useRef(0);
+  const inFlightRef = useRef(false);
+
+  useEffect(() => {
+    startedAtRef.current = Date.now();
+  }, []);
 
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
+    setError,
     formState: { errors, isSubmitting },
-  } = useForm<ContactEnquiry>({
-    resolver: zodResolver(contactEnquirySchema),
+  } = useForm<ContactInquiry>({
+    resolver: zodResolver(contactInquirySchema),
     mode: 'onBlur',
+    defaultValues: EMPTY,
   });
 
   const fieldId = (name: string) => `${formId}-${name}`;
 
-  const handleAttachmentChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const file = event.target.files?.[0];
-    setAttachmentError(null);
-
-    if (file === undefined) {
-      setAttachmentName(null);
-      setValue('attachmentName', undefined);
-      return;
-    }
-
-    if (file.size > MAX_ATTACHMENT_BYTES) {
-      setAttachmentError('That file is over 5 MB.');
-      event.target.value = '';
-      return;
-    }
-
-    if (
-      !ACCEPTED_ATTACHMENT_TYPES.includes(file.type as (typeof ACCEPTED_ATTACHMENT_TYPES)[number])
-    ) {
-      setAttachmentError('Use a PDF, Word document, PNG, or JPEG.');
-      event.target.value = '';
-      return;
-    }
-
-    setAttachmentName(file.name);
-    setValue('attachmentName', file.name);
-  };
+  /** Wires a control to its label, error and ARIA state. */
+  const describe = (name: FieldPath<ContactInquiry>) => ({
+    id: fieldId(name),
+    'aria-invalid': errors[name] ? true : undefined,
+    'aria-describedby': errors[name] ? `${fieldId(name)}-error` : undefined,
+  });
 
   const onSubmit = handleSubmit(async (values) => {
-    const outcome = await submitEnquiry(values);
-    setResult(outcome);
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    setResult(null);
 
-    if (outcome.status === 'success') {
-      reset();
-      setAttachmentName(null);
+    try {
+      const outcome = await submitContactForm({
+        ...values,
+        howHeard: values.howHeard ?? '',
+        companyFax: honeypotRef.current?.value ?? '',
+        startedAt: startedAtRef.current,
+      });
+
+      if (outcome.ok) {
+        reset(EMPTY);
+        startedAtRef.current = Date.now();
+        setResult({ status: 'success', message: contactInquiryContent.successMessage });
+        return;
+      }
+
+      if (outcome.reason === 'invalid' && outcome.fieldErrors) {
+        for (const [field, text] of Object.entries(outcome.fieldErrors)) {
+          if (field in EMPTY) setError(field as FieldPath<ContactInquiry>, { message: text });
+        }
+      }
+      if (outcome.reason === 'not-configured' && process.env.NODE_ENV !== 'production') {
+        console.error('Contact form: NEXT_PUBLIC_CONTACT_FORM_ENDPOINT is not set.');
+      }
+      setResult({
+        status: 'error',
+        message:
+          outcome.reason === 'rate-limited'
+            ? contactInquiryContent.rateLimitedMessage
+            : contactInquiryContent.errorMessage,
+      });
+    } finally {
+      inFlightRef.current = false;
     }
   });
 
   return (
-    <form onSubmit={onSubmit} noValidate className="grid grid-cols-1 gap-5 bs-md:grid-cols-2">
-      <div className="relative block">
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      aria-busy={isSubmitting}
+      className={cn(
+        'relative grid grid-cols-1 gap-5 bs-md:grid-cols-2',
+        // 992–1199px: the section is two columns there, leaving each half of
+        // this grid too narrow for the longer dropdown choices.
+        'bs-lg:max-bs-xl:grid-cols-1',
+      )}
+    >
+      {/* Honeypot: off-screen and unfocusable, so only a bot ever fills it. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] top-0 size-px overflow-hidden">
+        <label htmlFor={fieldId('companyFax')}>Company fax</label>
         <input
-          id={fieldId('name')}
+          ref={honeypotRef}
+          id={fieldId('companyFax')}
+          name="companyFax"
           type="text"
-          placeholder=" "
-          autoComplete="name"
-          aria-invalid={errors.name ? true : undefined}
-          aria-describedby={errors.name ? `${fieldId('name')}-error` : undefined}
-          {...register('name')}
-          className={cn(CONTROL_CLASS, 'peer')}
+          tabIndex={-1}
+          autoComplete="off"
+          defaultValue=""
         />
-        <label htmlFor={fieldId('name')} className={LABEL_CLASS}>
-          Your Name*
-        </label>
-        <Image
-          src="/assets/img/icon/user-balck-icon.svg"
-          alt=""
-          width={20}
-          height={20}
-          aria-hidden="true"
-          className={ICON_CLASS}
-        />
-        <FieldError id={`${fieldId('name')}-error`} message={errors.name?.message} />
       </div>
 
-      <div className="relative block">
-        <input
-          id={fieldId('email')}
-          type="email"
-          placeholder=" "
-          autoComplete="email"
-          aria-invalid={errors.email ? true : undefined}
-          aria-describedby={errors.email ? `${fieldId('email')}-error` : undefined}
-          {...register('email')}
-          className={cn(CONTROL_CLASS, 'peer')}
-        />
-        <label htmlFor={fieldId('email')} className={LABEL_CLASS}>
-          Email Address*
-        </label>
-        <Image
-          src="/assets/img/icon/sms-balck-icon.svg"
-          alt=""
-          width={20}
-          height={20}
-          aria-hidden="true"
-          className={ICON_CLASS}
-        />
-        <FieldError id={`${fieldId('email')}-error`} message={errors.email?.message} />
-      </div>
-
-      <div className="relative block">
-        <input
-          id={fieldId('phone')}
-          type="tel"
-          placeholder=" "
-          autoComplete="tel"
-          aria-invalid={errors.phone ? true : undefined}
-          aria-describedby={errors.phone ? `${fieldId('phone')}-error` : undefined}
-          {...register('phone')}
-          className={cn(CONTROL_CLASS, 'peer')}
-        />
-        <label htmlFor={fieldId('phone')} className={LABEL_CLASS}>
-          Contact No*
-        </label>
-        <Image
-          src="/assets/img/icon/call-icon02.svg"
-          alt=""
-          width={20}
-          height={20}
-          aria-hidden="true"
-          className={ICON_CLASS}
-        />
-        <FieldError id={`${fieldId('phone')}-error`} message={errors.phone?.message} />
-      </div>
-
-      <div>
-        <div
-          className={cn(
-            'relative h-[60px] rounded-[5px] border border-white/35 bg-field',
-            'transition-all duration-300 ease-out focus-within:border-lime',
-          )}
-        >
-          {/* The visible "Attach file..." chip is `aria-hidden` decoration, so
-                the input needs its own name. */}
-          <label htmlFor={fieldId('attachment')} className="sr-only">
-            Attach a file
-          </label>
+      {TEXT_FIELDS.map((field) => (
+        <div key={field.name} className="relative block">
           <input
-            id={fieldId('attachment')}
-            type="file"
-            accept={ACCEPTED_ATTACHMENT_TYPES.join(',')}
-            onChange={handleAttachmentChange}
-            aria-invalid={attachmentError !== null ? true : undefined}
-            // Points at the rejection message too, so a screen-reader user
-            // hears *why* their file was refused rather than just the hint.
-            aria-describedby={cn(
-              `${fieldId('attachment')}-hint`,
-              attachmentError !== null && `${fieldId('attachment')}-error`,
-            )}
-            className="absolute inset-0 z-[1] size-full cursor-pointer opacity-0"
+            type={field.type}
+            placeholder=" "
+            autoComplete={field.autoComplete}
+            maxLength={field.maxLength}
+            {...describe(field.name)}
+            {...register(field.name)}
+            className={cn(CONTROL_CLASS, 'peer')}
           />
-          <Image
-            src="/assets/img/icon/upload-icon.svg"
-            alt=""
-            width={20}
-            height={20}
-            aria-hidden="true"
-            className={ICON_CLASS}
-          />
-          <span
-            aria-hidden="true"
-            className={cn(
-              'absolute left-12 top-[19px] h-[22px] max-w-[calc(100%-70px)] truncate rounded-[20px]',
-              'border border-field-chip px-[10px] text-[15px] font-normal leading-5 text-white/70',
-              'transition-colors duration-300 ease-out',
-              attachmentName !== null && 'border-lime text-white',
-            )}
-          >
-            {attachmentName ?? 'Attach file...'}
-          </span>
-        </div>
-        <p id={`${fieldId('attachment')}-hint`} className="sr-only">
-          Optional. PDF, Word, PNG, or JPEG, up to 5 megabytes.
-        </p>
-        <FieldError id={`${fieldId('attachment')}-error`} message={attachmentError ?? undefined} />
-      </div>
-
-      <div className="bs-md:col-span-2">
-        <div className="relative z-[1]">
-          {/* A disabled first `<option>` is a prompt, not an accessible name —
-                axe reports `select-name` without a real label. */}
-          <label htmlFor={fieldId('service')} className="sr-only">
-            Select service
+          <label htmlFor={fieldId(field.name)} className={LABEL_CLASS}>
+            {field.label}
           </label>
-          <select
-            id={fieldId('service')}
-            defaultValue=""
-            aria-invalid={errors.service ? true : undefined}
-            aria-describedby={errors.service ? `${fieldId('service')}-error` : undefined}
-            {...register('service')}
-            className={cn(
-              CONTROL_CLASS,
-              'cursor-pointer appearance-none py-[10px] pl-12 pr-12',
-              'leading-[38px] text-white',
-            )}
-          >
-            <option value="" disabled className="bg-field">
-              Select Service*
-            </option>
-            {CONTACT_SERVICES.map((service) => (
-              <option key={service} value={service} className="bg-field">
-                {service}
-              </option>
-            ))}
-          </select>
-          <Image
-            src="/assets/img/icon/list-icon.svg"
-            alt=""
-            width={20}
-            height={20}
-            aria-hidden="true"
-            className={ICON_CLASS}
-          />
+          <FieldIcon src={field.icon} />
+          <FieldError id={`${fieldId(field.name)}-error`} message={errors[field.name]?.message} />
         </div>
-        <FieldError id={`${fieldId('service')}-error`} message={errors.service?.message} />
-      </div>
+      ))}
 
-      <div className="relative block bs-md:col-span-2">
+      {SELECT_FIELDS.map((field) => (
+        <div key={field.name}>
+          <div className="relative z-[1]">
+            <label htmlFor={fieldId(field.name)} className="sr-only">
+              {field.label}
+            </label>
+            <select {...describe(field.name)} {...register(field.name)} className={SELECT_CLASS}>
+              <option value="" disabled={field.required} className="bg-field">
+                {field.prompt}
+              </option>
+              {field.options.map((option) => (
+                <option key={option} value={option} className="bg-field">
+                  {option}
+                </option>
+              ))}
+            </select>
+            <FieldIcon src={field.icon} />
+          </div>
+          <FieldError id={`${fieldId(field.name)}-error`} message={errors[field.name]?.message} />
+        </div>
+      ))}
+
+      <div className="relative block col-span-full">
         <textarea
-          id={fieldId('message')}
           placeholder=" "
           rows={4}
-          aria-invalid={errors.message ? true : undefined}
-          aria-describedby={errors.message ? `${fieldId('message')}-error` : undefined}
+          maxLength={INQUIRY_LIMITS.message}
+          {...describe('message')}
           {...register('message')}
           className={cn(CONTROL_CLASS, 'peer h-[120px] resize-y py-[14px] pl-12 pr-5')}
         />
         <label htmlFor={fieldId('message')} className={cn(LABEL_CLASS, 'top-[30px]')}>
-          Your Message..
+          Message / Project Details*
         </label>
-        <Image
-          src="/assets/img/icon/messages-icon.svg"
-          alt=""
-          width={20}
-          height={20}
-          aria-hidden="true"
-          className={cn(ICON_CLASS, 'top-[30px]')}
-        />
+        <FieldIcon src={`${ICON_DIR}/messages-icon.svg`} className="top-[30px]" />
         <FieldError id={`${fieldId('message')}-error`} message={errors.message?.message} />
       </div>
 
-      <div className="mt-[15px] bs-md:col-span-2">
+      <div className="mt-[15px] col-span-full">
         <button
           type="submit"
           disabled={isSubmitting}
@@ -355,7 +382,7 @@ export function ContactForm() {
           role="status"
           aria-live="polite"
           className={cn(
-            'rounded-[5px] border px-4 py-3 text-[15px] bs-md:col-span-2',
+            'col-span-full rounded-[5px] border px-4 py-3 text-[15px]',
             result.status === 'success'
               ? 'border-mint/50 bg-mint/10 text-mint'
               : 'border-danger/50 bg-danger/10 text-danger-soft',

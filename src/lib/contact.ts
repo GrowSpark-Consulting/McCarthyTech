@@ -1,60 +1,9 @@
-import { z } from 'zod';
-
 import type { ImageAsset } from '@/types/media';
 
-/** Maximum accepted attachment size, in bytes. */
-export const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
-
-/** Attachment types the form accepts. */
-export const ACCEPTED_ATTACHMENT_TYPES = [
-  'application/pdf',
-  'image/png',
-  'image/jpeg',
-  'application/msword',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-] as const;
-
-/** Services offered in the enquiry dropdown. */
-export const CONTACT_SERVICES = ['AI - marketing', 'AI consulting', 'AI chatbot virtual'] as const;
-
 /**
- * Contact enquiry schema.
- *
- * Shared by the browser and the Server Action, so client-side hints and
- * server-side enforcement can never diverge — the server re-parses the same
- * shape rather than trusting what the client validated.
+ * Section copy. The form's fields, rules and messages are shared with the
+ * Contact page form — see `@/lib/contact-inquiry`.
  */
-export const contactEnquirySchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, 'Please enter your name.')
-    .max(80, 'Name must be 80 characters or fewer.'),
-  email: z.string().trim().email('Please enter a valid email address.'),
-  phone: z
-    .string()
-    .trim()
-    .min(6, 'Please enter a contact number.')
-    .max(24, 'Contact number must be 24 characters or fewer.')
-    // Permissive on purpose: international numbers vary wildly, and rejecting a
-    // valid format is far more costly here than accepting an odd one.
-    .regex(/^[+\d][\d\s()-]*$/, 'Use digits, spaces, and + ( ) - only.'),
-  service: z.enum(CONTACT_SERVICES, {
-    errorMap: () => ({ message: 'Please choose a service.' }),
-  }),
-  message: z
-    .string()
-    .trim()
-    .min(10, 'Please tell us a little more — at least 10 characters.')
-    .max(2000, 'Message must be 2000 characters or fewer.'),
-  /** Filename only; the file itself is not transported (see `submitEnquiry`). */
-  attachmentName: z.string().trim().max(160).optional(),
-});
-
-/** A validated enquiry. */
-export type ContactEnquiry = z.infer<typeof contactEnquirySchema>;
-
-/** Section copy. */
 export const contactContent = {
   eyebrow: 'Our Achievements',
   headingBefore: 'Your Trusted ',

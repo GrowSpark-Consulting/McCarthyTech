@@ -36,13 +36,12 @@ const ContactForm = dynamic(
 function ContactFormSkeleton() {
   return (
     <div aria-hidden="true">
-      <div className="grid grid-cols-1 gap-5 bs-md:grid-cols-2">
-        {Array.from({ length: 4 }, (_, index) => (
+      <div className="grid grid-cols-1 gap-5 bs-md:grid-cols-2 bs-lg:max-bs-xl:grid-cols-1">
+        {Array.from({ length: 8 }, (_, index) => (
           <div key={index} className="h-[60px] animate-pulse rounded-[5px] bg-white/[0.06]" />
         ))}
-        <div className="h-[60px] animate-pulse rounded-[5px] bg-white/[0.06] bs-md:col-span-2" />
-        <div className="h-[120px] animate-pulse rounded-[5px] bg-white/[0.06] bs-md:col-span-2" />
-        <div className="mt-[15px] h-[52px] animate-pulse rounded-cta bg-white/10 bs-md:col-span-2" />
+        <div className="col-span-full h-[120px] animate-pulse rounded-[5px] bg-white/[0.06]" />
+        <div className="col-span-full mt-[15px] h-[52px] animate-pulse rounded-cta bg-white/10" />
       </div>
     </div>
   );
