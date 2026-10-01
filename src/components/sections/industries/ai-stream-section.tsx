@@ -214,32 +214,35 @@ export function AiStreamSection() {
               '[mask:url(/assets/img/shape/indus-shape.png)_center/contain_no-repeat]',
             )}
           />
-        </div>
 
-        <div className="relative z-[1] mx-auto pb-24 pt-10 text-center max-bs-md:pb-14">
-          <span
-            className={cn(
-              'pointer-events-none absolute left-1/2 top-1/2 -z-10 size-[300px] rounded-full',
-              'animate-indus-logo-glow bg-indus-halo motion-reduce:animate-none',
-            )}
-          />
           {/*
             The badge: the logo on an indigo tile inside two faint rounded frames,
-            over a soft blue bloom. Drawn in CSS around the untouched logo file,
-            at the footprint the badge has always occupied (300×253, 180×152 on
-            phones) so the traces still meet it. The pulsing glow is applied to
-            the frame, never to the logo itself.
+            over a soft blue bloom, drawn in CSS around the untouched logo file.
+
+            It lives inside the traces box and is placed in the artwork's own
+            proportions, so it lands on the junction at every width and zoom.
+            The PNG's upper lines end at y=564 and its lower lines start at
+            y=775; the box below is the reference's 613×517 badge area, its top
+            at y=411, and the frame inside it is cut ~2px taller than that 211px
+            gap, so both sets of line ends run just into the frame's border
+            rather than stopping short of it. The pulsing glow is on the frame,
+            never on the logo itself.
           */}
           <div
             className={cn(
-              'mx-auto flex h-[253px] w-[300px] items-center justify-center',
-              'max-bs-md:h-[152px] max-bs-md:w-[180px]',
+              'absolute left-1/2 top-[41.47%] flex aspect-[613/517] w-[94.45%] -translate-x-1/2 items-center justify-center',
               'bg-[radial-gradient(circle_closest-side,rgba(23,133,209,0.2)_0%,rgba(23,133,209,0.18)_41%,rgba(23,133,209,0)_91%)]',
             )}
           >
+            <span
+              className={cn(
+                'absolute left-1/2 top-1/2 -z-10 aspect-square w-full rounded-full',
+                'animate-indus-logo-glow bg-indus-halo motion-reduce:animate-none',
+              )}
+            />
             <div
               className={cn(
-                'relative flex size-[104px] items-center justify-center rounded-[23%] max-bs-md:size-[63px]',
+                'relative flex aspect-square w-[35.2%] items-center justify-center rounded-[23%]',
                 'border border-[rgba(40,66,245,0.5)] bg-[rgba(6,34,62,0.53)]',
                 'animate-indus-logo-illum motion-reduce:animate-none',
               )}
@@ -250,6 +253,11 @@ export function AiStreamSection() {
               </span>
             </div>
           </div>
+        </div>
+
+        {/* Holds the section's height where the badge used to sit in flow. */}
+        <div className="pb-24 pt-10 max-bs-md:pb-14">
+          <div className="h-[253px] max-bs-md:h-[152px]" />
         </div>
       </div>
     </section>
