@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Container } from '@/components/ui/container';
 import { BreadcrumbTrail } from '@/components/ui/breadcrumb-trail';
 import { ContactCard } from '@/components/sections/contact/contact-card';
-import { ContactFormSection } from '@/components/sections/contact/contact-form-section';
+import { ContactInquirySection } from '@/components/sections/contact-page/contact-inquiry-section';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -58,8 +58,8 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      {/* Form and Map Section */}
-      <ContactFormSection />
+      {/* Inquiry form — submits to Google Sheets via Apps Script */}
+      <ContactInquirySection />
     </>
   );
 }

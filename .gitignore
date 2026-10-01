@@ -25,6 +25,8 @@ yarn-error.log*
 # env files
 .env
 .env*.local
+# Apps Script copies with real settings filled in
+*.local.gs
 
 # vercel
 .vercel
