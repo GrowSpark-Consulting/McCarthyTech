@@ -71,6 +71,15 @@ export async function gotoService(page: Page, slug: string): Promise<void> {
 }
 
 /**
+ * Loads the Team page and settles it.
+ *
+ * @param page - The page to prepare.
+ */
+export async function gotoTeam(page: Page): Promise<void> {
+  await gotoSettled(page, '/team');
+}
+
+/**
  * Navigates and waits for the page to stop moving.
  *
  * Shared by every entry point so no suite can accidentally assert against a
